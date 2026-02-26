@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selly®</title>
+<style>
+:root {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --surface2: #fbfbfd;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.12);
+  --text: #1d1d1f;
+  --text2: #6e6e73;
+  --text3: #86868b;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-light: #e8f0fe;
+  --red: #ff3b30;
+  --orange: #ff9500;
+  --green: #34c759;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5}
+.hidden{display:none!important}
+.page{min-height:100vh}
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:52px;display:flex;align-items:center;gap:20px}
+.nav-logo{font-size:19px;font-weight:600;letter-spacing:-0.3px;color:var(--text)}
+.nav-logo sup{font-size:10px;vertical-align:super}
+.nav-tag{font-size:13px;color:var(--text3)}
+.nav-ml{margin-left:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 20px;border-radius:980px;border:none;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s ease;letter-spacing:-0.1px;white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-secondary{background:rgba(0,0,0,0.06);color:var(--text)}
+.btn-secondary:hover{background:rgba(0,0,0,0.1)}
+.btn-ghost{background:transparent;color:var(--accent);font-size:14px;padding:8px 14px}
+.btn-ghost:hover{background:var(--accent-light)}
+.btn-sm{padding:7px 16px;font-size:13px}
+.landing-hero{padding:80px 40px 48px;text-align:center}
+.landing-eyebrow{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.landing-h1{font-size:clamp(40px,6vw,68px);font-weight:600;letter-spacing:-1.5px;line-height:1.05;margin-bottom:20px}
+.landing-sub{font-size:19px;color:var(--text2);max-width:500px;margin:0 auto 48px;font-weight:300;line-height:1.6}
+.landing-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin:0 auto;padding:0 24px 80px}
+.lcard{background:var(--surface);border-radius:var(--radius-lg);padding:36px 32px;text-align:left;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;transition:transform .25s ease,box-shadow .25s ease;border:1px solid var(--border)}
+.lcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.lcard-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:4px}
+.lcard-icon-blue{background:linear-gradient(135deg,#4facfe,#0071e3)}
+.lcard-icon-dark{background:linear-gradient(135deg,#434343,#1d1d1f)}
+.lcard-title{font-size:20px;font-weight:600;letter-spacing:-0.3px}
+.lcard-desc{font-size:14px;color:var(--text2);line-height:1.6;flex:1}
+.form-page-wrap{max-width:520px;margin:0 auto;padding:56px 24px}
+.section-title{font-size:28px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px}
+.section-sub{font-size:15px;color:var(--text2);margin-bottom:36px;line-height:1.6}
+.field{margin-bottom:18px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:6px;letter-spacing:.02em}
+.input{width:100%;padding:12px 16px;border:1px solid var(--border2);border-radius:10px;background:var(--surface);font-family:inherit;font-size:15px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,113,227,.15)}
+.form-actions{display:flex;gap:10px;margin-top:28px}
+.test-wrap{max-width:660px;margin:0 auto;padding:44px 24px}
+.prog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-label{font-size:13px;color:var(--text3);font-weight:500}
+.prog-counter{font-size:13px;color:var(--text3)}
+.prog-bar{height:3px;background:rgba(0,0,0,.08);border-radius:3px;margin-bottom:44px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.q-card{background:var(--surface);border-radius:var(--radius-lg);padding:36px 32px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:20px}
+.q-area{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.q-text{font-size:20px;font-weight:500;letter-spacing:-0.3px;line-height:1.4;margin-bottom:28px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1.5px solid var(--border2);border-radius:var(--radius);background:var(--surface2);cursor:pointer;transition:all .15s ease;text-align:left;font-family:inherit;font-size:14px;color:var(--text);line-height:1.5;width:100%}
+.opt:hover{border-color:var(--accent);background:var(--accent-light)}
+.opt.sel{border-color:var(--accent);background:var(--accent);color:#fff}
+.opt-badge{min-width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;transition:background .15s}
+.opt.sel .opt-badge{background:rgba(255,255,255,.25)}
+.test-nav{display:flex;justify-content:space-between;align-items:center;padding:4px 0}
+.done-wrap{max-width:480px;margin:0 auto;padding:100px 24px;text-align:center}
+.done-icon{width:72px;height:72px;background:linear-gradient(135deg,#34c759,#30b353);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 28px;box-shadow:0 8px 24px rgba(52,199,89,.35)}
+.done-wrap h2{font-size:32px;font-weight:600;letter-spacing:-0.5px;margin-bottom:14px}
+.done-wrap p{color:var(--text2);line-height:1.7;margin-bottom:40px;font-size:16px}
+.hr-wrap{max-width:920px;margin:0 auto;padding:44px 24px}
+.hr-title{font-size:32px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px}
+.hr-sub{color:var(--text2);margin-bottom:32px;font-size:15px}
+.api-card{background:var(--surface);border-radius:var(--radius-lg);padding:22px 24px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:24px}
+.api-card-title{font-size:12px;font-weight:600;color:var(--text3);margin-bottom:12px;letter-spacing:.06em;text-transform:uppercase}
+.api-row{display:flex;gap:10px}
+.api-row .input{flex:1}
+.api-note{font-size:12px;color:var(--text3);margin-top:8px}
+.empty-state{text-align:center;padding:60px 24px;color:var(--text2)}
+.empty-state-icon{font-size:44px;margin-bottom:16px;opacity:.4}
+.empty-state-title{font-size:20px;font-weight:500;margin-bottom:8px;color:var(--text)}
+.cand-card{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:24px}
+.cand-row{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--border)}
+.cand-row:last-child{border-bottom:none}
+.cand-row:hover{background:var(--bg)}
+.cand-row.active{background:var(--accent-light)}
+.cand-name{font-size:16px;font-weight:500;letter-spacing:-0.2px}
+.cand-meta{font-size:13px;color:var(--text3);margin-top:2px}
+.cand-date{font-size:12px;color:var(--text3)}
+.detail-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+.detail-name{font-size:26px;font-weight:600;letter-spacing:-0.4px}
+.detail-meta{font-size:13px;color:var(--text3);margin-top:4px}
+.chart-card{background:var(--surface);border-radius:var(--radius-lg);padding:28px 24px 16px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:18px}
+.chart-card-title{font-size:12px;font-weight:600;color:var(--text3);margin-bottom:24px;letter-spacing:.06em;text-transform:uppercase}
+.chart-container{display:flex;align-items:flex-end;gap:8px;height:200px}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}
+.chart-val{font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px}
+.chart-bar-wrap{width:100%;display:flex;align-items:flex-end;justify-content:center;flex:1}
+.chart-bar{width:100%;border-radius:5px 5px 0 0;min-height:4px}
+.chart-area-label{font-size:9px;color:var(--text3);text-align:center;line-height:1.3;font-weight:500;margin-top:8px;width:100%}
+.chart-baseline{height:1px;background:var(--border2);margin-top:0}
+.notice-card{background:var(--surface);border-radius:var(--radius);padding:14px 18px;border:1px solid var(--border);font-size:13px;color:var(--text2);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.notice-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ruolo-row{display:flex;gap:12px;margin-bottom:20px;align-items:flex-end}
+.ruolo-row .field{flex:1;margin-bottom:0}
+.report-card{background:var(--surface);border-radius:var(--radius-lg);padding:32px;border:1px solid var(--border);box-shadow:var(--shadow);margin-top:20px}
+.report-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.report-card-title{font-size:18px;font-weight:600;letter-spacing:-0.3px}
+#report-out{font-size:14px;line-height:1.85;color:var(--text);white-space:pre-wrap}
+#report-out h3{font-size:15px;font-weight:600;letter-spacing:-0.2px;margin:24px 0 8px;color:var(--accent)}
+.loading{display:flex;align-items:center;gap:10px;color:var(--text3);font-size:14px;padding:24px 0}
+.dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+@media(max-width:600px){.landing-cards{grid-template-columns:1fr}.nav{padding:0 20px}.landing-hero{padding:48px 20px 32px}.field-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="p-landing" class="page">
+  <nav class="nav">
+    <div class="nav-logo">Selly<sup>®</sup></div>
+  </nav>
+  <div class="landing-hero">
+    <div class="landing-eyebrow">Strumento di Valutazione</div>
+    <h1 class="landing-h1">Conosci le persone<br>prima di sceglierle.</h1>
+    <p class="landing-sub">Un approccio scientifico alla selezione del personale. Semplice per i candidati, potente per i recruiter.</p>
+  </div>
+  <div class="landing-cards">
+    <div class="lcard">
+      <div class="lcard-icon lcard-icon-blue">✦</div>
+      <div class="lcard-title">Candidato</div>
+      <div class="lcard-desc">Compila il questionario. Non esistono risposte giuste o sbagliate — rispondi con spontaneità.</div>
+      <button class="btn btn-primary" id="go-candidato">Inizia →</button>
+    </div>
+    <div class="lcard">
+      <div class="lcard-icon lcard-icon-dark">⬡</div>
+      <div class="lcard-title">HR Manager</div>
+      <div class="lcard-desc">Accedi alla dashboard, visualizza i profili e genera report interpretativi completi.</div>
+      <button class="btn btn-secondary" id="go-hr">Dashboard →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FORM CANDIDATO -->
+<div id="p-form" class="page hidden">
+  <nav class="nav">
+    <div class="nav-logo">Selly<sup>®</sup></div>
+    <div class="nav-tag">Questionario</div>
+    <div class="nav-ml"><button class="btn btn-ghost btn-sm" id="form-back">← Indietro</button></div>
+  </nav>
+  <div class="form-page-wrap">
+    <div class="section-title">Iniziamo</div>
+    <div class="section-sub">Inserisci i tuoi dati prima di procedere con il questionario.</div>
+    <div class="field-row">
+      <div class="field"><label class="label">Nome *</label><input class="input" id="f-nome" type="text" placeholder="Mario"></div>
+      <div class="field"><label class="label">Cognome *</label><input class="input" id="f-cognome" type="text" placeholder="Rossi"></div>
+    </div>
+    <div class="field"><label class="label">Ruolo per cui ti candidi</label><input class="input" id="f-ruolo" type="text" placeholder="Es. Sales Manager"></div>
+    <div class="field-row">
+      <div class="field"><label class="label">Data di nascita</label><input class="input" id="f-dob" type="date"></div>
+      <div class="field"><label class="label">Telefono</label><input class="input" id="f-tel" type="tel" placeholder="+39 333 000 0000"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="label">Email</label><input class="input" id="f-email" type="email" placeholder="mario@email.com"></div>
+      <div class="field"><label class="label">Città / Paese di residenza</label><input class="input" id="f-citta" type="text" placeholder="Milano, Italia"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" id="form-back2">Indietro</button>
+      <button class="btn btn-primary" id="form-start">Continua →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEST -->
+<div id="p-test" class="page hidden">
+  <nav class="nav">
+    <div class="nav-logo">Selly<sup>®</sup></div>
+    <div class="nav-tag" id="t-name"></div>
+  </nav>
+  <div class="test-wrap">
+    <div class="prog-header">
+      <div class="prog-label" id="t-prog-label">Domanda 1 di 15</div>
+      <div class="prog-counter" id="t-nav-info"></div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="t-prog-fill" style="width:0%"></div></div>
+    <div class="q-card"><div id="t-question"></div></div>
+    <div class="test-nav">
+      <button class="btn btn-secondary btn-sm" id="t-prev">← Indietro</button>
+      <button class="btn btn-primary btn-sm" id="t-next">Avanti →</button>
+    </div>
+  </div>
+</div>
+
+<!-- DONE -->
+<div id="p-done" class="page hidden">
+  <nav class="nav"><div class="nav-logo">Selly<sup>®</sup></div></nav>
+  <div class="done-wrap">
+    <div class="done-icon">✓</div>
+    <h2>Tutto fatto!</h2>
+    <p>Il tuo questionario è stato completato con successo. Il team HR esaminerà il tuo profilo a breve.</p>
+    <button class="btn btn-secondary" id="done-home">← Torna alla home</button>
+  </div>
+</div>
+
+<!-- HR DASHBOARD -->
+<div id="p-hr" class="page hidden">
+  <nav class="nav">
+    <div class="nav-logo">Selly<sup>®</sup></div>
+    <div class="nav-tag">Dashboard</div>
+    <div class="nav-ml"><button class="btn btn-ghost btn-sm" id="hr-home">← Home</button></div>
+  </nav>
+  <div class="hr-wrap">
+    <div class="hr-title">Candidati</div>
+    <div class="hr-sub">Seleziona un profilo per analizzarlo e generare il report.</div>
+    <div class="api-card">
+      <div class="api-card-title">Configurazione API</div>
+      <div class="api-row">
+        <input class="input" id="api-key" type="password" placeholder="sk-ant-...">
+        <button class="btn btn-primary btn-sm" id="api-save">Salva</button>
+      </div>
+      <div class="api-note">La chiave rimane salvata solo nel tuo browser.</div>
+    </div>
+    <div id="hr-list"></div>
+    <div id="hr-detail" class="hidden">
+      <div class="detail-header">
+        <div>
+          <div class="detail-name" id="d-nome"></div>
+          <div class="detail-meta" id="d-meta"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="d-close">Chiudi ✕</button>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title">Profilo per Area</div>
+        <div class="chart-container" id="d-chart"></div>
+        <div class="chart-baseline"></div>
+      </div>
+      <div id="d-trasparenza"></div>
+      <div class="ruolo-row">
+        <div class="field">
+          <label class="label">Ruolo Target (opzionale)</label>
+          <input class="input" id="d-ruolo" type="text" placeholder="Es. Sales Manager, HR Business Partner...">
+        </div>
+        <button class="btn btn-primary" id="d-report-btn">Genera Report →</button>
+      </div>
+      <div id="d-report"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QQ=[
+  {a:'INI',al:'Iniziativa',t:'Quando ricevo un compito nuovo:',o:['Aspetto istruzioni dettagliate prima di iniziare','Inizio solo dopo aver chiarito ogni dubbio','Inizio e chiedo chiarimenti se necessario','Mi attivo subito cercando anche miglioramenti']},
+  {a:'INI',al:'Iniziativa',t:'Se vedo un problema non segnalato:',o:['Non intervengo se non richiesto','Lo segnalo ma non mi espongo','Propongo una possibile soluzione','Mi attivo direttamente per risolverlo']},
+  {a:'AFF',al:'Affidabilità',t:'Rispetto le scadenze:',o:['Solo se monitorato','Con qualche ritardo occasionale','Generalmente sempre','Sempre, anche anticipando']},
+  {a:'AFF',al:'Affidabilità',t:'Quando commetto un errore:',o:['Evito di comunicarlo','Lo comunico solo se emerge','Lo segnalo e collaboro alla soluzione','Mi assumo piena responsabilità e propongo correzioni']},
+  {a:'MET',al:'Metodo',t:'Organizzo il mio lavoro:',o:['In modo spontaneo e non strutturato','Con una pianificazione minima','Con strumenti organizzativi di base','Con metodo strutturato e verifiche periodiche']},
+  {a:'MET',al:'Metodo',t:'Gestione delle priorità:',o:['Procedo in ordine di arrivo','Mi affido alle urgenze','Valuto importanza e scadenza','Pianifico strategicamente le attività']},
+  {a:'QUA',al:'Qualità',t:'Prima di consegnare un lavoro:',o:['Lo invio senza ricontrollare','Controllo solo se richiesto','Effettuo un controllo generale','Verifico con checklist o criteri definiti']},
+  {a:'FOC',al:'Focus',t:'Durante attività complesse:',o:['Mi distraggo facilmente','Alterno concentrazione e distrazioni','Mantengo concentrazione adeguata','Rimango focalizzato fino al completamento']},
+  {a:'ANA',al:'Analisi',t:"Di fronte a un problema:",o:["Agisco d'istinto","Valuto solo gli aspetti principali","Analizzo cause e conseguenze","Scompongo il problema in variabili dettagliate"]},
+  {a:'CRE',al:'Creatività',t:'Quando una procedura non funziona:',o:['Continuo ad applicarla','Chiedo come fare diversamente','Propongo adattamenti','Sviluppo soluzioni alternative innovative']},
+  {a:'REL',al:'Relazione',t:'Nei rapporti con i colleghi:',o:['Mantengo distanza','Interagisco solo se necessario','Collaboro in modo disponibile','Facilito attivamente il clima positivo']},
+  {a:'INF',al:'Influenza',t:"Quando propongo un'idea:",o:['Evito di espormi','La esprimo senza insistere','Argomento le mie ragioni','Coinvolgo gli altri per ottenere adesione']},
+  {a:'INT',al:'Integrità',t:'Se una decisione non è eticamente corretta:',o:['Mi adeguo','Evito il confronto','Espongo le mie perplessità','Mi oppongo in modo coerente e motivato']},
+  {a:'TRA',al:'Trasparenza',t:'Nella mia vita non ho mai commesso errori.',o:['Sempre vero','Spesso vero','Raramente vero','Mai vero'],inv:true},
+  {a:'TRA',al:'Trasparenza',t:'Mi capita di avere difficoltà come chiunque altro.',o:['Mai vero','Raramente vero','Spesso vero','Sempre vero']}
+];
+const AREA_COLORS={INI:'#0071e3',AFF:'#34c759',MET:'#5856d6',QUA:'#ff9500',FOC:'#ff3b30',ANA:'#ac39d4',CRE:'#ff6b35',REL:'#00c7be',INF:'#30b0c7',INT:'#1c8c4e'};
+const AREA_FULL={INI:'Iniziativa',AFF:'Affidabilità',MET:'Metodo',QUA:'Qualità',FOC:'Focus',ANA:'Analisi',CRE:'Creatività',REL:'Relazione',INF:'Influenza',INT:'Integrità'};
+let curQ=0,ans=new Array(QQ.length).fill(null),candInfo={},tests=[],selIdx=null;
+
+function show(id){
+  ['p-landing','p-form','p-test','p-done','p-hr'].forEach(p=>document.getElementById(p).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+document.getElementById('go-candidato').onclick=()=>show('p-form');
+document.getElementById('go-hr').onclick=()=>{loadTests();loadKey();renderList();show('p-hr');};
+document.getElementById('form-back').onclick=()=>show('p-landing');
+document.getElementById('form-back2').onclick=()=>show('p-landing');
+document.getElementById('form-start').onclick=()=>{
+  const nome=document.getElementById('f-nome').value.trim();
+  const cognome=document.getElementById('f-cognome').value.trim();
+  if(!nome||!cognome){alert('Inserisci nome e cognome.');return;}
+  candInfo={nome:nome+' '+cognome,ruolo:document.getElementById('f-ruolo').value.trim(),email:document.getElementById('f-email').value.trim(),tel:document.getElementById('f-tel').value.trim(),dob:document.getElementById('f-dob').value,citta:document.getElementById('f-citta').value.trim(),data:new Date().toLocaleDateString('it-IT')};
+  curQ=0;ans=new Array(QQ.length).fill(null);
+  document.getElementById('t-name').textContent=candInfo.nome;
+  show('p-test');renderQ();
+};
+function renderQ(){
+  const q=QQ[curQ],tot=QQ.length;
+  document.getElementById('t-prog-label').textContent='Domanda '+(curQ+1)+' di '+tot;
+  document.getElementById('t-prog-fill').style.width=(((curQ+1)/tot)*100)+'%';
+  document.getElementById('t-nav-info').textContent=ans.filter(x=>x!==null).length+' completate';
+  document.getElementById('t-prev').style.visibility=curQ===0?'hidden':'visible';
+  document.getElementById('t-next').textContent=curQ===tot-1?'Completa ✓':'Avanti →';
+  document.getElementById('t-question').innerHTML='<div class="q-area">'+q.al+'</div><div class="q-text">'+q.t+'</div><div class="options">'+q.o.map((op,i)=>'<button class="opt'+(ans[curQ]===i?' sel':'')+'" data-i="'+i+'"><span class="opt-badge">'+'ABCD'[i]+'</span><span>'+op+'</span></button>').join('')+'</div>';
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{ans[curQ]=+b.dataset.i;renderQ();});
+}
+document.getElementById('t-prev').onclick=()=>{if(curQ>0){curQ--;renderQ();}};
+document.getElementById('t-next').onclick=()=>{
+  if(ans[curQ]===null){alert('Seleziona una risposta per continuare.');return;}
+  if(curQ<QQ.length-1){curQ++;renderQ();}else submitTest();
+};
+function calcScores(){
+  const map={};const tra=[];
+  QQ.forEach((q,i)=>{
+    if(ans[i]===null)return;
+    const s=q.inv?(3-ans[i]):ans[i];
+    if(q.a==='TRA')tra.push(s);
+    else{if(!map[q.a])map[q.a]=[];map[q.a].push(s);}
+  });
+  const sc={};
+  Object.keys(AREA_FULL).forEach(a=>{const v=map[a]||[];sc[a]=v.length?Math.round(v.reduce((x,y)=>x+y,0)/v.length/3*100):0;});
+  sc.TRA=tra.length?Math.round(tra.reduce((x,y)=>x+y,0)/tra.length/3*100):50;
+  return sc;
+}
+function submitTest(){tests.push({candidato:candInfo,scores:calcScores(),ts:new Date().toISOString()});saveTests();show('p-done');}
+document.getElementById('done-home').onclick=()=>show('p-landing');
+function saveTests(){try{localStorage.setItem('selly_tests',JSON.stringify(tests));}catch(e){}}
+function loadTests(){try{const d=localStorage.getItem('selly_tests');if(d)tests=JSON.parse(d);}catch(e){}}
+function saveKey(){try{localStorage.setItem('selly_key',document.getElementById('api-key').value.trim());}catch(e){}}
+function loadKey(){try{const k=localStorage.getItem('selly_key');if(k)document.getElementById('api-key').value=k;}catch(e){}}
+document.getElementById('hr-home').onclick=()=>show('p-landing');
+document.getElementById('api-save').onclick=()=>{saveKey();alert('API Key salvata.');};
+function lv(s){
+  if(s<40)return{l:'Basso',col:'#ff3b30'};
+  if(s<60)return{l:'Medio',col:'#ff9500'};
+  if(s<80)return{l:'Buono',col:'#34c759'};
+  return{l:'Elevato',col:'#0071e3'};
+}
+function renderList(){
+  const el=document.getElementById('hr-list');
+  if(!tests.length){el.innerHTML='<div class="empty-state"><div class="empty-state-icon">◻</div><div class="empty-state-title">Nessun candidato ancora</div><div>I questionari completati appariranno qui.</div></div>';return;}
+  el.innerHTML='<div class="cand-card">'+tests.map((t,i)=>'<div class="cand-row'+(selIdx===i?' active':'')+'" data-i="'+i+'"><div><div class="cand-name">'+t.candidato.nome+'</div><div class="cand-meta">'+(t.candidato.ruolo||'—')+(t.candidato.citta?' · '+t.candidato.citta:'')+'</div></div><div style="display:flex;align-items:center;gap:12px"><div class="cand-date">'+t.candidato.data+'</div><div style="color:var(--text3)">›</div></div></div>').join('')+'</div>';
+  document.querySelectorAll('.cand-row').forEach(r=>r.onclick=()=>selectCand(+r.dataset.i));
+}
+function selectCand(i){
+  selIdx=i;const t=tests[i];
+  document.getElementById('d-nome').textContent=t.candidato.nome;
+  document.getElementById('d-meta').textContent=[t.candidato.ruolo,t.candidato.email,t.candidato.tel,t.candidato.citta].filter(Boolean).join(' · ')+' · '+t.candidato.data;
+  if(t.candidato.ruolo)document.getElementById('d-ruolo').value=t.candidato.ruolo;
+  renderChart(t.scores);renderTra(t.scores.TRA);
+  document.getElementById('d-report').innerHTML='';
+  document.getElementById('hr-detail').classList.remove('hidden');
+  renderList();
+  setTimeout(()=>document.getElementById('hr-detail').scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+document.getElementById('d-close').onclick=()=>{selIdx=null;document.getElementById('hr-detail').classList.add('hidden');renderList();};
+function renderChart(sc){
+  const areas=Object.keys(AREA_FULL);
+  document.getElementById('d-chart').innerHTML=areas.map(a=>{
+    const s=sc[a]||0,col=AREA_COLORS[a],h=Math.max(s,4);
+    return '<div class="chart-col"><div class="chart-val">'+s+'</div><div class="chart-bar-wrap"><div class="chart-bar" style="height:'+h+'%;background:'+col+';opacity:.85"></div></div><div class="chart-area-label">'+AREA_FULL[a]+'</div></div>';
+  }).join('');
+}
+function renderTra(tra){
+  const v=lv(tra);let msg='Attendibilità adeguata.';
+  if(tra<40)msg='Attenzione: attendibilità limitata. Valutare i risultati con cautela.';
+  else if(tra<60)msg='Possibile desiderabilità sociale. Risultati indicativi.';
+  document.getElementById('d-trasparenza').innerHTML='<div class="notice-card"><div class="notice-dot" style="background:'+v.col+'"></div><div><strong>Trasparenza: '+tra+' – '+v.l+'</strong> &nbsp;·&nbsp; '+msg+'</div></div>';
+}
+document.getElementById('d-report-btn').onclick=generateReport;
+async function generateReport(){
+  const key=document.getElementById('api-key').value.trim();
+  if(!key){alert('Inserisci la API key nella sezione in alto.');return;}
+  const t=tests[selIdx],ruolo=document.getElementById('d-ruolo').value.trim()||t.candidato.ruolo||null,sc=t.scores;
+  const el=document.getElementById('d-report');
+  el.innerHTML='<div class="report-card"><div class="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Generazione report in corso...</span></div></div>';
+  const punteggi=Object.entries(AREA_FULL).map(([k,l])=>k+' – '+l+': '+sc[k]).join('\n');
+  const cond=[sc.TRA<40?'- Trasparenza < 40: inserire nota attendibilità limitata':'',Object.entries(sc).filter(([k])=>k!=='TRA').filter(([,v])=>v<40).length>3?'- Più di 3 aree sotto 40: evidenziare criticità sistemica':'',Object.entries(sc).filter(([k])=>k!=='TRA').filter(([,v])=>v>80).length>4?'- Più di 4 aree sopra 80: valutare rischio sovraattivazione':'',(sc.INI+sc.INF>150&&sc.AFF<50)?'- INI+INF > 150 con AFF < 50: rischio leadership non stabile':''].filter(Boolean).join('\n');
+  const prompt='Sei un sistema HR professionale. Genera un Report di Valutazione completo per il candidato '+t.candidato.nome+'.\n\nPUNTEGGI (0–100):\n'+punteggi+'\nTRASPARENZA: '+sc.TRA+'\n'+(ruolo?'RUOLO TARGET: '+ruolo:'(nessun ruolo target)')+'\n\nSOGLIE: 0–39=Basso, 40–59=Medio, 60–79=Buono, 80–100=Elevato\n\nSTRUTTURA OBBLIGATORIA:\n1. SINTESI ESECUTIVA (max 12–15 righe)\n2. ANALISI DIMENSIONI COMPORTAMENTALI (tutte e 10 le aree)\n3. PATTERN DOMINANTI E DINAMICHE INTERNE\n4. INDICATORI DI FRIZIONE ORGANIZZATIVA\n5. RISCHI SITUAZIONALI\n6. CONDIZIONI ORGANIZZATIVE FAVORENTI\n7. COMPATIBILITÀ CON IL RUOLO TARGET '+(ruolo?'(valuta per '+ruolo+')':'(ometti questa sezione)')+'\n8. VALUTAZIONE FINALE (8–10 righe)\n\nSTILE: consulenziale, tecnico HR, nessun emoji, nessun linguaggio informale, 1200–2000 parole.\n'+(cond?'REGOLE CONDIZIONALI:\n'+cond:'');
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-opus-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})});
+    const d=await r.json();
+    if(d.error){el.innerHTML='<div class="notice-card"><div class="notice-dot" style="background:#ff3b30"></div>Errore API: '+d.error.message+'</div>';return;}
+    const txt=d.content[0].text.replace(/^#{1,3}\s*(.+)$/gm,'<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    el.innerHTML='<div class="report-card"><div class="report-card-header"><div class="report-card-title">Report — '+t.candidato.nome+'</div><button class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById(\'report-out\').innerText).then(()=>alert(\'Copiato!\'))">Copia testo</button></div><div id="report-out">'+txt+'</div></div>';
+  }catch(e){el.innerHTML='<div class="notice-card"><div class="notice-dot" style="background:#ff3b30"></div>Errore: '+e.message+'</div>';}
+}
+loadTests();
+</script>
+</body>
+</html>
