@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Master Creativamente®</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f5f0e8;
+    --cream: #ede8dc;
+    --accent: #8b4513;
+    --accent-light: #c4885a;
+    --muted: #7a7060;
+    --border: #ccc4b0;
+    --white: #fdfaf5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 13px;
+  }
+
+  /* ─── LAYOUT ─── */
+  #app { min-height: 100vh; }
+
+  /* ─── SCREENS ─── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ─── HEADER ─── */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 24px 48px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    background: var(--white);
+  }
+  .header-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .header-logo span { color: var(--accent); }
+  .header-sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ─── LANDING ─── */
+  #screen-landing {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .landing-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .landing-card {
+    padding: 64px 56px;
+    border-right: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .landing-card:last-child { border-right: none; }
+  .landing-card:hover { background: var(--cream); }
+  .landing-card-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .landing-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .landing-card-desc {
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 48px;
+    font-size: 12px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: fit-content;
+  }
+  .btn:hover { background: var(--ink); color: var(--white); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--white); }
+  .btn-primary:hover { background: var(--ink); border-color: var(--ink); }
+  .btn-small { padding: 8px 18px; font-size: 10px; }
+
+  /* ─── TEST SCREEN ─── */
+  .test-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+  .test-progress-bar {
+    height: 2px;
+    background: var(--border);
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .test-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+  .test-progress-label {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .question-area-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .question-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin-bottom: 36px;
+    color: var(--ink);
+  }
+  .options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .option-btn:hover { border-color: var(--accent); background: var(--cream); }
+  .option-btn.selected { border-color: var(--accent); background: var(--accent); color: var(--white); }
+  .option-letter {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    min-width: 16px;
+    opacity: 0.6;
+    padding-top: 1px;
+  }
+  .test-nav { display: flex; justify-content: space-between; align-items: center; }
+  .test-nav-info { font-size: 11px; color: var(--muted); }
+
+  /* ─── CANDIDATO FORM ─── */
+  .candidate-form {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+  .candidate-form h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+  .candidate-form p { color: var(--muted); margin-bottom: 40px; line-height: 1.6; }
+  .form-group { margin-bottom: 24px; }
+  .form-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--accent); }
+
+  /* ─── HR SCREEN ─── */
+  .hr-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+  .hr-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+  .hr-subtitle { color: var(--muted); margin-bottom: 40px; }
+
+  /* API KEY section */
+  .api-section {
+    border: 1px solid var(--border);
+    padding: 24px;
+    background: var(--white);
+    margin-bottom: 32px;
+  }
+  .api-section-title {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .api-input-row { display: flex; gap: 12px; }
+  .api-input-row .form-input { flex: 1; }
+
+  /* Results table */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+  }
+  .result-cell {
+    background: var(--white);
+    padding: 16px;
+    text-align: center;
+  }
+  .result-cell-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .result-cell-score {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .result-cell-level {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .level-basso { color: #c0392b; }
+  .level-medio { color: #e67e22; }
+  .level-buono { color: #27ae60; }
+  .level-elevato { color: var(--accent); }
+
+  /* Score bar */
+  .score-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+  .score-bar-label {
+    width: 60px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .score-bar-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+  }
+  .score-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.8s ease;
+  }
+  .score-bar-value {
+    width: 32px;
+    font-size: 11px;
+    text-align: right;
+    color: var(--ink);
+  }
+
+  /* Report output */
+  .report-section {
+    border: 1px solid var(--border);
+    background: var(--white);
+    padding: 32px;
+    margin-top: 32px;
+  }
+  .report-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .report-title-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  #report-output {
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--ink);
+    white-space: pre-wrap;
+    font-family: 'DM Mono', monospace;
+  }
+  #report-output h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 24px 0 8px;
+    color: var(--accent);
+  }
+
+  .loading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 24px 0;
+  }
+  .loading-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 1.2s infinite;
+  }
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1); }
+  }
+
+  .notice {
+    padding: 12px 16px;
+    border-left: 3px solid var(--accent);
+    background: var(--cream);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  /* Candidati list */
+  .candidati-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 32px; }
+  .candidato-row {
+    background: var(--white);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .candidato-row:hover { background: var(--cream); }
+  .candidato-row.selected { background: var(--cream); border-left: 3px solid var(--accent); }
+  .candidato-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; }
+  .candidato-meta { font-size: 11px; color: var(--muted); }
+  .candidato-date { font-size: 10px; color: var(--muted); }
+
+  .empty-state {
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--muted);
+  }
+  .empty-state-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.3; }
+  .empty-state-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 8px; }
+
+  .ruolo-input-row { display: flex; gap: 12px; margin-bottom: 24px; align-items: flex-end; }
+  .ruolo-input-row .form-group { flex: 1; margin-bottom: 0; }
+
+  @media (max-width: 640px) {
+    .landing-body { grid-template-columns: 1fr; }
+    .landing-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .results-grid { grid-template-columns: repeat(2, 1fr); }
+    .header { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN: LANDING
+═══════════════════════════════════════════════ -->
+<div id="screen-landing" class="screen active">
+  <div class="header">
+    <div class="header-logo">Test Master <span>Creativamente</span>®</div>
+    <div class="header-sub">Sistema di Valutazione Comportamentale</div>
+  </div>
+  <div class="landing-body">
+    <div class="landing-card">
+      <div>
+        <div class="landing-card-tag">Accesso Candidato</div>
+        <div class="landing-card-title">Compila<br>il Test</div>
+        <div class="landing-card-desc">Rispondi alle domande del test comportamentale. Non esistono risposte giuste o sbagliate. Il completamento richiede circa 5–8 minuti.</div>
+      </div>
+      <button class="btn btn-primary" onclick="showScreen('screen-candidato-form')">Inizia il Test →</button>
+    </div>
+    <div class="landing-card">
+      <div>
+        <div class="landing-card-tag">Accesso HR Manager</div>
+        <div class="landing-card-title">Analizza<br>i Risultati</div>
+        <div class="landing-card-desc">Visualizza i profili dei candidati, consulta i punteggi per area e genera il report interpretativo completo con intelligenza artificiale.</div>
+      </div>
+      <button class="btn" onclick="showScreen('screen-hr')">Vai alla Dashboard →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN: CANDIDATO – FORM DATI
+═══════════════════════════════════════════════ -->
+<div id="screen-candidato-form" class="screen">
+  <div class="header">
+    <div class="header-logo">Test Master <span>Creativamente</span>®</div>
+    <div class="header-sub">Candidato</div>
+  </div>
+  <div class="candidate-form">
+    <h2>Prima di iniziare</h2>
+    <p>Inserisci i tuoi dati. Verranno utilizzati solo dall'HR Manager per identificare il tuo profilo.</p>
+    <div class="form-group">
+      <label class="form-label">Nome e Cognome *</label>
+      <input class="form-input" id="cand-nome" type="text" placeholder="Es. Mario Rossi">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Ruolo per cui ti stai candidando</label>
+      <input class="form-input" id="cand-ruolo" type="text" placeholder="Es. Project Manager">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" id="cand-email" type="email" placeholder="mario.rossi@email.com">
+    </div>
+    <div style="display:flex; gap:12px; margin-top: 8px;">
+      <button class="btn" onclick="showScreen('screen-landing')">← Indietro</button>
+      <button class="btn btn-primary" onclick="startTest()">Inizia il Test →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN: TEST DOMANDE
+═══════════════════════════════════════════════ -->
+<div id="screen-test" class="screen">
+  <div class="header">
+    <div class="header-logo">Test Master <span>Creativamente</span>®</div>
+    <div class="header-sub" id="test-header-name"></div>
+  </div>
+  <div class="test-wrapper">
+    <div class="test-progress-label" id="progress-label">Domanda 1 di 15</div>
+    <div class="test-progress-bar">
+      <div class="test-progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div id="question-container"></div>
+    <div class="test-nav">
+      <button class="btn btn-small" id="btn-prev" onclick="prevQuestion()">← Precedente</button>
+      <div class="test-nav-info" id="nav-info"></div>
+      <button class="btn btn-small btn-primary" id="btn-next" onclick="nextQuestion()">Successiva →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN: TEST COMPLETATO
+═══════════════════════════════════════════════ -->
+<div id="screen-done" class="screen">
+  <div class="header">
+    <div class="header-logo">Test Master <span>Creativamente</span>®</div>
+  </div>
+  <div style="max-width: 480px; margin: 0 auto; padding: 80px 24px; text-align: center;">
+    <div style="font-size: 48px; margin-bottom: 24px;">✓</div>
+    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; margin-bottom: 16px;">Test completato</h2>
+    <p style="color: var(--muted); line-height: 1.7; margin-bottom: 40px;">Le tue risposte sono state registrate. L'HR Manager le analizzerà e genererà il tuo profilo comportamentale.</p>
+    <button class="btn" onclick="showScreen('screen-landing')">← Torna alla Home</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN: HR DASHBOARD
+═══════════════════════════════════════════════ -->
+<div id="screen-hr" class="screen">
+  <div class="header">
+    <div class="header-logo">Test Master <span>Creativamente</span>®</div>
+    <div class="header-sub">HR Dashboard</div>
+    <div style="margin-left: auto;">
+      <button class="btn btn-small" onclick="showScreen('screen-landing')">← Home</button>
+    </div>
+  </div>
+  <div class="hr-wrapper">
+    <div class="hr-title">Dashboard Candidati</div>
+    <div class="hr-subtitle">Seleziona un candidato per visualizzare il profilo e generare il report.</div>
+
+    <!-- API KEY -->
+    <div class="api-section">
+      <div class="api-section-title">Configurazione API Claude</div>
+      <div class="api-input-row">
+        <input class="form-input" id="api-key-input" type="password" placeholder="sk-ant-api03-...">
+        <button class="btn btn-small" onclick="saveApiKey()">Salva</button>
+      </div>
+      <div style="font-size: 10px; color: var(--muted); margin-top: 8px;">La chiave viene salvata solo localmente nel browser. Non viene mai inviata ad altri server.</div>
+    </div>
+
+    <!-- Lista candidati -->
+    <div id="candidati-container"></div>
+
+    <!-- Dettaglio candidato selezionato -->
+    <div id="candidato-detail" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+        <div>
+          <div style="font-family: 'Cormorant Garamond', serif; font-size:28px;" id="detail-nome"></div>
+          <div style="font-size:11px; color:var(--muted);" id="detail-meta"></div>
+        </div>
+        <button class="btn btn-small" onclick="closeCandidatoDetail()">✕ Chiudi</button>
+      </div>
+
+      <!-- Score bars -->
+      <div id="score-bars" style="margin-bottom:32px; border:1px solid var(--border); padding:24px; background:var(--white);"></div>
+
+      <!-- Trasparenza -->
+      <div id="trasparenza-box" style="margin-bottom:24px;"></div>
+
+      <!-- Ruolo target -->
+      <div class="ruolo-input-row">
+        <div class="form-group">
+          <label class="form-label">Ruolo Target (opzionale – migliora il report)</label>
+          <input class="form-input" id="ruolo-target-input" type="text" placeholder="Es. Sales Manager, Developer, HR Business Partner...">
+        </div>
+        <button class="btn btn-primary" onclick="generateReport()">Genera Report AI →</button>
+      </div>
+
+      <!-- Report -->
+      <div id="report-container"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #app -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATI DOMANDE
+// ═══════════════════════════════════════════════════════════
+const QUESTIONS = [
+  { area: 'INI', areaLabel: 'Iniziativa', text: 'Quando ricevo un compito nuovo:', options: ['Aspetto istruzioni dettagliate prima di iniziare', 'Inizio solo dopo aver chiarito ogni dubbio', 'Inizio e chiedo chiarimenti se necessario', 'Mi attivo subito cercando anche miglioramenti'] },
+  { area: 'INI', areaLabel: 'Iniziativa', text: 'Se vedo un problema non segnalato:', options: ['Non intervengo se non richiesto', 'Lo segnalo ma non mi espongo', 'Propongo una possibile soluzione', 'Mi attivo direttamente per risolverlo'] },
+  { area: 'AFF', areaLabel: 'Affidabilità', text: 'Rispetto le scadenze:', options: ['Solo se monitorato', 'Con qualche ritardo occasionale', 'Generalmente sempre', 'Sempre, anche anticipando'] },
+  { area: 'AFF', areaLabel: 'Affidabilità', text: 'Quando commetto un errore:', options: ['Evito di comunicarlo', 'Lo comunico solo se emerge', 'Lo segnalo e collaboro alla soluzione', 'Mi assumo piena responsabilità e propongo correzioni'] },
+  { area: 'MET', areaLabel: 'Metodo', text: 'Organizzo il mio lavoro:', options: ['In modo spontaneo e non strutturato', 'Con una pianificazione minima', 'Con strumenti organizzativi di base', 'Con metodo strutturato e verifiche periodiche'] },
+  { area: 'MET', areaLabel: 'Metodo', text: 'Gestione delle priorità:', options: ['Procedo in ordine di arrivo', 'Mi affido alle urgenze', 'Valuto importanza e scadenza', 'Pianifico strategicamente le attività'] },
+  { area: 'QUA', areaLabel: 'Qualità', text: 'Prima di consegnare un lavoro:', options: ['Lo invio senza ricontrollare', 'Controllo solo se richiesto', 'Effettuo un controllo generale', 'Verifico con checklist o criteri definiti'] },
+  { area: 'FOC', areaLabel: 'Focus', text: 'Durante attività complesse:', options: ['Mi distraggo facilmente', 'Alterno concentrazione e distrazioni', 'Mantengo concentrazione adeguata', 'Rimango focalizzato fino al completamento'] },
+  { area: 'ANA', areaLabel: 'Analisi', text: 'Di fronte a un problema:', options: ['Agisco d\'istinto', 'Valuto solo gli aspetti principali', 'Analizzo cause e conseguenze', 'Scompongo il problema in variabili dettagliate'] },
+  { area: 'CRE', areaLabel: 'Creatività', text: 'Quando una procedura non funziona:', options: ['Continuo ad applicarla', 'Chiedo come fare diversamente', 'Propongo adattamenti', 'Sviluppo soluzioni alternative innovative'] },
+  { area: 'REL', areaLabel: 'Relazione', text: 'Nei rapporti con i colleghi:', options: ['Mantengo distanza', 'Interagisco solo se necessario', 'Collaboro in modo disponibile', 'Facilito attivamente il clima positivo'] },
+  { area: 'INF', areaLabel: 'Influenza', text: 'Quando propongo un\'idea:', options: ['Evito di espormi', 'La esprimo senza insistere', 'Argomento le mie ragioni', 'Coinvolgo gli altri per ottenere adesione'] },
+  { area: 'INT', areaLabel: 'Integrità', text: 'Se una decisione non è eticamente corretta:', options: ['Mi adeguo', 'Evito il confronto', 'Espongo le mie perplessità', 'Mi oppongo in modo coerente e motivato'] },
+  { area: 'TRA', areaLabel: 'Trasparenza', text: 'Nella mia vita non ho mai commesso errori.', options: ['Sempre vero', 'Spesso vero', 'Raramente vero', 'Mai vero'], inverted: true },
+  { area: 'TRA', areaLabel: 'Trasparenza', text: 'Mi capita di avere difficoltà come chiunque altro.', options: ['Mai vero', 'Raramente vero', 'Spesso vero', 'Sempre vero'] }
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let currentQuestion = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+let candidatoInfo = {};
+let savedTests = [];
+let selectedCandidatoIndex = null;
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'screen-hr') renderHrDashboard();
+}
+
+// ═══════════════════════════════════════════════════════════
+// TEST LOGIC
+// ═══════════════════════════════════════════════════════════
+function startTest() {
+  const nome = document.getElementById('cand-nome').value.trim();
+  if (!nome) { alert('Inserisci il tuo nome per continuare.'); return; }
+  candidatoInfo = {
+    nome: nome,
+    ruolo: document.getElementById('cand-ruolo').value.trim(),
+    email: document.getElementById('cand-email').value.trim(),
+    data: new Date().toLocaleDateString('it-IT')
+  };
+  currentQuestion = 0;
+  answers = new Array(QUESTIONS.length).fill(null);
+  document.getElementById('test-header-name').textContent = nome;
+  showScreen('screen-test');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQuestion];
+  const total = QUESTIONS.length;
+
+  document.getElementById('progress-label').textContent = `Domanda ${currentQuestion + 1} di ${total}`;
+  document.getElementById('progress-fill').style.width = `${((currentQuestion + 1) / total) * 100}%`;
+  document.getElementById('nav-info').textContent = `${answers.filter(a => a !== null).length} / ${total} risposte`;
+
+  document.getElementById('btn-prev').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+  document.getElementById('btn-next').textContent = currentQuestion === total - 1 ? 'Completa Test ✓' : 'Successiva →';
+
+  const container = document.getElementById('question-container');
+  container.innerHTML = `
+    <div class="question-area-tag">${q.areaLabel}</div>
+    <div class="question-text">${q.text}</div>
+    <div class="options-list">
+      ${q.options.map((opt, i) => `
+        <button class="option-btn ${answers[currentQuestion] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
+          <span class="option-letter">${['A','B','C','D'][i]}</span>
+          <span>${opt}</span>
+        </button>
+      `).join('')}
+    </div>
+  `;
+}
+
+function selectAnswer(idx) {
+  answers[currentQuestion] = idx;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (answers[currentQuestion] === null) {
+    alert('Seleziona una risposta per continuare.');
+    return;
+  }
+  if (currentQuestion < QUESTIONS.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+  } else {
+    submitTest();
+  }
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// CALCOLO PUNTEGGI
+// ═══════════════════════════════════════════════════════════
+function calculateScores(answers) {
+  const areas = ['INI','AFF','MET','QUA','FOC','ANA','CRE','REL','INF','INT'];
+  const areaAnswers = {};
+  const traAnswers = [];
+
+  QUESTIONS.forEach((q, i) => {
+    const rawScore = answers[i]; // 0–3 (indice risposta)
+    if (rawScore === null) return;
+
+    let score;
+    if (q.inverted) {
+      score = 3 - rawScore; // inverted: A=3,B=2,C=1,D=0 → poi scala 0-100
+    } else {
+      score = rawScore; // 0,1,2,3
+    }
+
+    if (q.area === 'TRA') {
+      traAnswers.push(score);
+    } else {
+      if (!areaAnswers[q.area]) areaAnswers[q.area] = [];
+      areaAnswers[q.area].push(score);
+    }
+  });
+
+  const scores = {};
+  areas.forEach(area => {
+    const vals = areaAnswers[area] || [];
+    if (vals.length === 0) { scores[area] = 0; return; }
+    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+    scores[area] = Math.round((avg / 3) * 100);
+  });
+
+  // Trasparenza
+  const traAvg = traAnswers.length > 0 ? traAnswers.reduce((a, b) => a + b, 0) / traAnswers.length : 1.5;
+  scores['TRA'] = Math.round((traAvg / 3) * 100);
+
+  return scores;
+}
+
+function submitTest() {
+  const scores = calculateScores(answers);
+  const testRecord = {
+    candidato: candidatoInfo,
+    scores: scores,
+    timestamp: new Date().toISOString()
+  };
+  savedTests.push(testRecord);
+  saveToStorage();
+  showScreen('screen-done');
+}
+
+// ═══════════════════════════════════════════════════════════
+// STORAGE (localStorage)
+// ═══════════════════════════════════════════════════════════
+function saveToStorage() {
+  try { localStorage.setItem('creativamente_tests', JSON.stringify(savedTests)); } catch(e) {}
+}
+function loadFromStorage() {
+  try {
+    const d = localStorage.getItem('creativamente_tests');
+    if (d) savedTests = JSON.parse(d);
+  } catch(e) {}
+}
+function saveApiKey() {
+  const key = document.getElementById('api-key-input').value.trim();
+  if (!key) return;
+  try { localStorage.setItem('creativamente_apikey', key); } catch(e) {}
+  alert('API Key salvata.');
+}
+function loadApiKey() {
+  try {
+    const k = localStorage.getItem('creativamente_apikey');
+    if (k) document.getElementById('api-key-input').value = k;
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════
+// HR DASHBOARD
+// ═══════════════════════════════════════════════════════════
+function renderHrDashboard() {
+  loadFromStorage();
+  loadApiKey();
+  closeCandidatoDetail();
+
+  const container = document.getElementById('candidati-container');
+  if (savedTests.length === 0) {
+    container.innerHTML = `<div class="empty-state">
+      <div class="empty-state-icon">◻</div>
+      <div class="empty-state-text">Nessun candidato ancora</div>
+      <div style="font-size:11px; color:var(--muted);">I test completati dai candidati appariranno qui.</div>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-bottom:12px;">
+      ${savedTests.length} candidat${savedTests.length === 1 ? 'o' : 'i'}
+    </div>
+    <div class="candidati-list">
+      ${savedTests.map((t, i) => `
+        <div class="candidato-row ${selectedCandidatoIndex === i ? 'selected' : ''}" onclick="selectCandidato(${i})">
+          <div>
+            <div class="candidato-name">${t.candidato.nome}</div>
+            <div class="candidato-meta">${t.candidato.ruolo || '—'} ${t.candidato.email ? '· ' + t.candidato.email : ''}</div>
+          </div>
+          <div class="candidato-date">${t.candidato.data}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function selectCandidato(i) {
+  selectedCandidatoIndex = i;
+  const t = savedTests[i];
+  document.getElementById('detail-nome').textContent = t.candidato.nome;
+  document.getElementById('detail-meta').textContent = (t.candidato.ruolo || '') + (t.candidato.email ? ' · ' + t.candidato.email : '') + ' · ' + t.candidato.data;
+
+  if (t.candidato.ruolo) {
+    document.getElementById('ruolo-target-input').value = t.candidato.ruolo;
+  }
+
+  renderScoreBars(t.scores);
+  renderTrasparenza(t.scores.TRA);
+  document.getElementById('report-container').innerHTML = '';
+  document.getElementById('candidato-detail').style.display = 'block';
+  renderHrDashboard(); // re-render to highlight selected
+}
+
+function closeCandidatoDetail() {
+  selectedCandidatoIndex = null;
+  document.getElementById('candidato-detail').style.display = 'none';
+}
+
+function getLevelLabel(score) {
+  if (score < 40) return { label: 'Basso', cls: 'level-basso' };
+  if (score < 60) return { label: 'Medio', cls: 'level-medio' };
+  if (score < 80) return { label: 'Buono', cls: 'level-buono' };
+  return { label: 'Elevato', cls: 'level-elevato' };
+}
+
+function renderScoreBars(scores) {
+  const areas = ['INI','AFF','MET','QUA','FOC','ANA','CRE','REL','INF','INT'];
+  const labels = { INI:'Iniziativa', AFF:'Affidabilità', MET:'Metodo', QUA:'Qualità', FOC:'Focus', ANA:'Analisi', CRE:'Creatività', REL:'Relazione', INF:'Influenza', INT:'Integrità' };
+
+  const html = areas.map(a => {
+    const s = scores[a] || 0;
+    const lv = getLevelLabel(s);
+    return `<div class="score-bar-row">
+      <div class="score-bar-label">${a}</div>
+      <div class="score-bar-track"><div class="score-bar-fill" style="width:${s}%; background:${s < 40 ? '#c0392b' : s < 60 ? '#e67e22' : s < 80 ? '#27ae60' : 'var(--accent)'}"></div></div>
+      <div class="score-bar-value">${s}</div>
+      <div class="score-bar-label ${lv.cls}" style="width:50px; text-align:left;">${lv.label}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('score-bars').innerHTML = `
+    <div style="font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-bottom:20px;">Punteggi per Area</div>
+    ${html}
+  `;
+}
+
+function renderTrasparenza(tra) {
+  const lv = getLevelLabel(tra);
+  let note = '';
+  if (tra < 40) note = 'Attenzione: il profilo presenta bassa trasparenza. I risultati di competenza devono essere valutati con cautela.';
+  else if (tra < 60) note = 'Possibile desiderabilità sociale. I risultati sono indicativi ma richiedono verifica.';
+
+  document.getElementById('trasparenza-box').innerHTML = `
+    <div class="notice">
+      <strong>Indice di Trasparenza: ${tra} – ${lv.label}</strong>
+      ${note ? '<br>' + note : ' · Attendibilità adeguata.'}
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════
+// GENERA REPORT
+// ═══════════════════════════════════════════════════════════
+async function generateReport() {
+  const apiKey = document.getElementById('api-key-input').value.trim();
+  if (!apiKey) {
+    alert('Inserisci la tua API key Claude nella sezione in alto.');
+    return;
+  }
+
+  const t = savedTests[selectedCandidatoIndex];
+  const ruoloTarget = document.getElementById('ruolo-target-input').value.trim() || t.candidato.ruolo || null;
+  const scores = t.scores;
+
+  const container = document.getElementById('report-container');
+  container.innerHTML = `
+    <div class="report-section">
+      <div class="loading">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <span>Generazione report in corso...</span>
+      </div>
+    </div>
+  `;
+
+  const prompt = buildPrompt(t.candidato.nome, scores, ruoloTarget);
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-20250514',
+        max_tokens: 4000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      container.innerHTML = `<div class="notice" style="border-color:#c0392b;">Errore API: ${data.error.message}</div>`;
+      return;
+    }
+
+    const reportText = data.content[0].text;
+    container.innerHTML = `
+      <div class="report-section">
+        <div class="report-section-header">
+          <div class="report-title-text">Report di Valutazione – ${t.candidato.nome}</div>
+          <button class="btn btn-small" onclick="copyReport()">Copia Testo</button>
+        </div>
+        <div id="report-output">${formatReport(reportText)}</div>
+      </div>
+    `;
+  } catch (err) {
+    container.innerHTML = `<div class="notice" style="border-color:#c0392b;">Errore di connessione: ${err.message}</div>`;
+  }
+}
+
+function buildPrompt(nome, scores, ruoloTarget) {
+  const aree = [
+    ['INI','Iniziativa'], ['AFF','Affidabilità'], ['MET','Metodo'], ['QUA','Qualità'],
+    ['FOC','Focus'], ['ANA','Analisi'], ['CRE','Creatività'], ['REL','Relazione'],
+    ['INF','Influenza'], ['INT','Integrità']
+  ];
+
+  const punteggi = aree.map(([k, label]) => `${k} – ${label}: ${scores[k]}`).join('\n');
+
+  return `Sei un sistema di valutazione HR professionale che utilizza il metodo Test Master Creativamente®.
+
+Genera un Report di Valutazione completo e professionale per il candidato ${nome}.
+
+PUNTEGGI (scala 0–100):
+${punteggi}
+
+INDICE DI TRASPARENZA: ${scores.TRA}
+${ruoloTarget ? `RUOLO TARGET: ${ruoloTarget}` : '(Nessun ruolo target specificato)'}
+
+SOGLIE INTERPRETATIVE:
+- 0–39 = Livello Basso
+- 40–59 = Livello Medio
+- 60–79 = Livello Buono
+- 80–100 = Livello Elevato
+
+STRUTTURA OBBLIGATORIA DEL REPORT (rispetta l'ordine e i titoli):
+
+1. SINTESI ESECUTIVA
+(Livello generale, punti di forza, aree critiche, attendibilità, compatibilità con ruolo. Max 12–15 righe)
+
+2. ANALISI DELLE DIMENSIONI COMPORTAMENTALI
+(Per ogni area: nome, livello, interpretazione tecnica, impatto organizzativo, rischi se estremo)
+
+3. PATTERN DOMINANTI E DINAMICHE INTERNE
+(Coerenza tra aree operative, relazionali, equilibri e polarizzazioni)
+
+4. INDICATORI DI FRIZIONE ORGANIZZATIVA
+(Combinazioni a rischio tra aree, spiegazione tecnica)
+
+5. RISCHI SITUAZIONALI
+(Comportamento in contesti strutturati, destrutturati, sotto pressione, ambiguità)
+
+6. CONDIZIONI ORGANIZZATIVE FAVORENTI
+(Leadership ideale, autonomia, controllo, ambiente, cultura)
+
+7. COMPATIBILITÀ CON IL RUOLO TARGET
+${ruoloTarget ? `(Profilo ideale per ${ruoloTarget}, confronto con profilo reale, gap, valutazione: Alta/Moderata/Critica)` : '(Sezione da omettere: nessun ruolo target fornito)'}
+
+8. VALUTAZIONE FINALE
+(Valore potenziale, maturità comportamentale, necessità coaching, idoneità. 8–10 righe)
+
+REGOLE DI STILE OBBLIGATORIE:
+- Linguaggio consulenziale, tecnico HR
+- Nessun giudizio morale
+- Nessun emoji
+- Nessun linguaggio informale
+- Non usare elenchi emotivi
+- Lunghezza: 1.200–2.000 parole
+
+REGOLE CONDIZIONALI:
+${scores.TRA < 40 ? '- ATTENZIONE: Trasparenza < 40, inserire nota di attendibilità limitata\n' : ''}${Object.values(scores).filter((v, i) => i < 10 && v < 40).length > 3 ? '- Più di 3 aree sotto 40: evidenziare criticità sistemica\n' : ''}${Object.values(scores).filter((v, i) => i < 10 && v > 80).length > 4 ? '- Più di 4 aree sopra 80: valutare rischio sovraattivazione\n' : ''}${(scores.INI + scores.INF > 150 && scores.AFF < 50) ? '- INI+INF > 150 con AFF < 50: evidenziare rischio leadership non stabile\n' : ''}`;
+}
+
+function formatReport(text) {
+  return text
+    .replace(/^(#{1,3}\s*\d+\.\s*.+)$/gm, '<h3>$1</h3>')
+    .replace(/^\*\*(.+)\*\*$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+function copyReport() {
+  const el = document.getElementById('report-output');
+  if (!el) return;
+  navigator.clipboard.writeText(el.innerText).then(() => alert('Report copiato negli appunti.'));
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+loadFromStorage();
+</script>
+</body>
+</html>
