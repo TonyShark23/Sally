@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Master Creativamente®</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Mono',monospace;background:#f5f0e8;color:#1a1a1a;min-height:100vh;font-size:13px}
+.hidden{display:none!important}
+.page{min-height:100vh}
+.header{border-bottom:1px solid #ccc4b0;padding:20px 40px;display:flex;align-items:center;gap:20px;background:#fdfaf5}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600}
+.logo span{color:#8b4513}
+.sub{font-size:11px;color:#7a7060;letter-spacing:.1em;text-transform:uppercase}
+.ml-auto{margin-left:auto}
+
+/* LANDING */
+.landing-grid{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 65px)}
+.card{padding:60px 50px;border-right:1px solid #ccc4b0;display:flex;flex-direction:column;justify-content:space-between}
+.card:last-child{border-right:none}
+.card-tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7a7060;margin-bottom:28px}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;line-height:1.1;margin-bottom:16px}
+.card-desc{color:#7a7060;line-height:1.7;font-size:12px;margin-bottom:40px}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:11px 26px;border:1px solid #1a1a1a;background:transparent;color:#1a1a1a;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;width:fit-content}
+.btn:hover{background:#1a1a1a;color:#fdfaf5}
+.btn-accent{background:#8b4513;border-color:#8b4513;color:#fdfaf5}
+.btn-accent:hover{background:#1a1a1a;border-color:#1a1a1a}
+.btn-sm{padding:8px 16px;font-size:10px}
+
+/* FORM */
+.form-wrap{max-width:460px;margin:0 auto;padding:60px 24px}
+.form-wrap h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:8px}
+.form-wrap p{color:#7a7060;margin-bottom:36px;line-height:1.6}
+.field{margin-bottom:22px}
+.label{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#7a7060;margin-bottom:7px}
+.input{width:100%;padding:11px 14px;border:1px solid #ccc4b0;background:#fdfaf5;font-family:'DM Mono',monospace;font-size:13px;color:#1a1a1a;outline:none;transition:border-color .2s}
+.input:focus{border-color:#8b4513}
+.row{display:flex;gap:10px;margin-top:6px}
+
+/* TEST */
+.test-wrap{max-width:700px;margin:0 auto;padding:44px 24px}
+.prog-label{font-size:10px;color:#7a7060;letter-spacing:.15em;text-transform:uppercase;margin-bottom:7px}
+.prog-bar{height:2px;background:#ccc4b0;margin-bottom:44px}
+.prog-fill{height:100%;background:#8b4513;transition:width .4s}
+.area-tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8b4513;margin-bottom:10px}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;line-height:1.4;margin-bottom:32px}
+.options{display:flex;flex-direction:column;gap:9px;margin-bottom:36px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border:1px solid #ccc4b0;background:#fdfaf5;cursor:pointer;transition:all .15s;text-align:left;font-family:'DM Mono',monospace;font-size:12px;color:#1a1a1a;line-height:1.5;width:100%}
+.opt:hover{border-color:#8b4513;background:#ede8dc}
+.opt.sel{border-color:#8b4513;background:#8b4513;color:#fdfaf5}
+.opt-letter{font-size:10px;min-width:14px;opacity:.6;padding-top:1px}
+.test-nav{display:flex;justify-content:space-between;align-items:center}
+.test-nav-info{font-size:11px;color:#7a7060}
+
+/* DONE */
+.done-wrap{max-width:460px;margin:0 auto;padding:80px 24px;text-align:center}
+.done-wrap h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;margin-bottom:14px}
+.done-wrap p{color:#7a7060;line-height:1.7;margin-bottom:36px}
+
+/* HR */
+.hr-wrap{max-width:880px;margin:0 auto;padding:44px 24px}
+.hr-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;margin-bottom:6px}
+.hr-sub{color:#7a7060;margin-bottom:36px}
+.api-box{border:1px solid #ccc4b0;padding:22px;background:#fdfaf5;margin-bottom:28px}
+.api-box-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7a7060;margin-bottom:10px}
+.api-row{display:flex;gap:10px}
+.api-row .input{flex:1}
+.api-note{font-size:10px;color:#7a7060;margin-top:7px}
+.empty{text-align:center;padding:60px 24px;color:#7a7060}
+.empty-title{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px}
+.cand-list{display:flex;flex-direction:column;gap:1px;background:#ccc4b0;border:1px solid #ccc4b0;margin-bottom:28px}
+.cand-row{background:#fdfaf5;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .15s}
+.cand-row:hover{background:#ede8dc}
+.cand-row.active{background:#ede8dc;border-left:3px solid #8b4513}
+.cand-name{font-family:'Cormorant Garamond',serif;font-size:17px}
+.cand-meta{font-size:11px;color:#7a7060}
+.cand-date{font-size:10px;color:#7a7060}
+.detail-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.detail-name{font-family:'Cormorant Garamond',serif;font-size:28px}
+.detail-meta{font-size:11px;color:#7a7060}
+.scores-box{border:1px solid #ccc4b0;padding:22px;background:#fdfaf5;margin-bottom:22px}
+.bar-row{display:flex;align-items:center;gap:14px;margin-bottom:9px}
+.bar-label{width:56px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7a7060}
+.bar-track{flex:1;height:4px;background:#ccc4b0}
+.bar-fill{height:100%;transition:width .8s}
+.bar-val{width:30px;font-size:11px;text-align:right}
+.bar-level{width:48px;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.lv-basso{color:#c0392b}
+.lv-medio{color:#e67e22}
+.lv-buono{color:#27ae60}
+.lv-elevato{color:#8b4513}
+.notice{padding:11px 14px;border-left:3px solid #8b4513;background:#ede8dc;font-size:11px;color:#7a7060;margin-bottom:22px;line-height:1.6}
+.ruolo-row{display:flex;gap:10px;margin-bottom:22px;align-items:flex-end}
+.ruolo-row .field{flex:1;margin-bottom:0}
+.report-box{border:1px solid #ccc4b0;background:#fdfaf5;padding:28px;margin-top:22px}
+.report-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #ccc4b0}
+.report-title{font-family:'Cormorant Garamond',serif;font-size:19px}
+#report-out{font-size:12px;line-height:1.9;white-space:pre-wrap}
+#report-out h3{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;margin:20px 0 6px;color:#8b4513}
+.loading{display:flex;align-items:center;gap:10px;color:#7a7060;font-size:12px;padding:20px 0}
+.dot{width:6px;height:6px;background:#8b4513;border-radius:50%;animation:pulse 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+@media(max-width:600px){.landing-grid{grid-template-columns:1fr}.card{border-right:none;border-bottom:1px solid #ccc4b0}.header{padding:14px 18px}}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="p-landing" class="page">
+  <div class="header">
+    <div class="logo">Test Master <span>Creativamente</span>®</div>
+    <div class="sub">Sistema di Valutazione Comportamentale</div>
+  </div>
+  <div class="landing-grid">
+    <div class="card">
+      <div>
+        <div class="card-tag">Accesso Candidato</div>
+        <div class="card-title">Compila<br>il Test</div>
+        <div class="card-desc">Rispondi alle domande del test comportamentale. Non esistono risposte giuste o sbagliate. Durata: 5–8 minuti.</div>
+      </div>
+      <button class="btn btn-accent" id="go-candidato">Inizia il Test →</button>
+    </div>
+    <div class="card">
+      <div>
+        <div class="card-tag">Accesso HR Manager</div>
+        <div class="card-title">Analizza<br>i Risultati</div>
+        <div class="card-desc">Visualizza i profili dei candidati, consulta i punteggi e genera il report interpretativo completo con AI.</div>
+      </div>
+      <button class="btn" id="go-hr">Vai alla Dashboard →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FORM CANDIDATO -->
+<div id="p-form" class="page hidden">
+  <div class="header">
+    <div class="logo">Test Master <span>Creativamente</span>®</div>
+    <div class="sub">Candidato</div>
+  </div>
+  <div class="form-wrap">
+    <h2>Prima di iniziare</h2>
+    <p>Inserisci i tuoi dati. Verranno usati solo dall'HR Manager per identificare il tuo profilo.</p>
+    <div class="field">
+      <label class="label">Nome e Cognome *</label>
+      <input class="input" id="f-nome" type="text" placeholder="Es. Mario Rossi">
+    </div>
+    <div class="field">
+      <label class="label">Ruolo per cui ti candidi</label>
+      <input class="input" id="f-ruolo" type="text" placeholder="Es. Project Manager">
+    </div>
+    <div class="field">
+      <label class="label">Email</label>
+      <input class="input" id="f-email" type="email" placeholder="mario@email.com">
+    </div>
+    <div class="row">
+      <button class="btn btn-sm" id="form-back">← Indietro</button>
+      <button class="btn btn-accent btn-sm" id="form-start">Inizia il Test →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEST -->
+<div id="p-test" class="page hidden">
+  <div class="header">
+    <div class="logo">Test Master <span>Creativamente</span>®</div>
+    <div class="sub" id="t-name"></div>
+  </div>
+  <div class="test-wrap">
+    <div class="prog-label" id="t-prog-label">Domanda 1 di 15</div>
+    <div class="prog-bar"><div class="prog-fill" id="t-prog-fill" style="width:0%"></div></div>
+    <div id="t-question"></div>
+    <div class="test-nav">
+      <button class="btn btn-sm" id="t-prev">← Precedente</button>
+      <div class="test-nav-info" id="t-nav-info"></div>
+      <button class="btn btn-accent btn-sm" id="t-next">Successiva →</button>
+    </div>
+  </div>
+</div>
+
+<!-- DONE -->
+<div id="p-done" class="page hidden">
+  <div class="header">
+    <div class="logo">Test Master <span>Creativamente</span>®</div>
+  </div>
+  <div class="done-wrap">
+    <div style="font-size:48px;margin-bottom:20px">✓</div>
+    <h2>Test completato</h2>
+    <p>Le tue risposte sono state registrate. L'HR Manager le analizzerà e genererà il tuo profilo comportamentale.</p>
+    <button class="btn" id="done-home">← Torna alla Home</button>
+  </div>
+</div>
+
+<!-- HR DASHBOARD -->
+<div id="p-hr" class="page hidden">
+  <div class="header">
+    <div class="logo">Test Master <span>Creativamente</span>®</div>
+    <div class="sub">HR Dashboard</div>
+    <div class="ml-auto"><button class="btn btn-sm" id="hr-home">← Home</button></div>
+  </div>
+  <div class="hr-wrap">
+    <div class="hr-title">Dashboard Candidati</div>
+    <div class="hr-sub">Seleziona un candidato per visualizzare il profilo e generare il report.</div>
+    <div class="api-box">
+      <div class="api-box-title">API Key Claude (Anthropic)</div>
+      <div class="api-row">
+        <input class="input" id="api-key" type="password" placeholder="sk-ant-...">
+        <button class="btn btn-sm" id="api-save">Salva</button>
+      </div>
+      <div class="api-note">La chiave è salvata solo nel tuo browser locale.</div>
+    </div>
+    <div id="hr-list"></div>
+    <div id="hr-detail" class="hidden">
+      <div class="detail-header">
+        <div>
+          <div class="detail-name" id="d-nome"></div>
+          <div class="detail-meta" id="d-meta"></div>
+        </div>
+        <button class="btn btn-sm" id="d-close">✕ Chiudi</button>
+      </div>
+      <div class="scores-box" id="d-scores"></div>
+      <div id="d-trasparenza"></div>
+      <div class="ruolo-row">
+        <div class="field">
+          <label class="label">Ruolo Target (migliora il report)</label>
+          <input class="input" id="d-ruolo" type="text" placeholder="Es. Sales Manager, HR Business Partner...">
+        </div>
+        <button class="btn btn-accent" id="d-report-btn">Genera Report AI →</button>
+      </div>
+      <div id="d-report"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QQ = [
+  {a:'INI',al:'Iniziativa',t:'Quando ricevo un compito nuovo:',o:['Aspetto istruzioni dettagliate prima di iniziare','Inizio solo dopo aver chiarito ogni dubbio','Inizio e chiedo chiarimenti se necessario','Mi attivo subito cercando anche miglioramenti']},
+  {a:'INI',al:'Iniziativa',t:'Se vedo un problema non segnalato:',o:['Non intervengo se non richiesto','Lo segnalo ma non mi espongo','Propongo una possibile soluzione','Mi attivo direttamente per risolverlo']},
+  {a:'AFF',al:'Affidabilità',t:'Rispetto le scadenze:',o:['Solo se monitorato','Con qualche ritardo occasionale','Generalmente sempre','Sempre, anche anticipando']},
+  {a:'AFF',al:'Affidabilità',t:'Quando commetto un errore:',o:['Evito di comunicarlo','Lo comunico solo se emerge','Lo segnalo e collaboro alla soluzione','Mi assumo piena responsabilità e propongo correzioni']},
+  {a:'MET',al:'Metodo',t:'Organizzo il mio lavoro:',o:['In modo spontaneo e non strutturato','Con una pianificazione minima','Con strumenti organizzativi di base','Con metodo strutturato e verifiche periodiche']},
+  {a:'MET',al:'Metodo',t:'Gestione delle priorità:',o:['Procedo in ordine di arrivo','Mi affido alle urgenze','Valuto importanza e scadenza','Pianifico strategicamente le attività']},
+  {a:'QUA',al:'Qualità',t:'Prima di consegnare un lavoro:',o:['Lo invio senza ricontrollare','Controllo solo se richiesto','Effettuo un controllo generale','Verifico con checklist o criteri definiti']},
+  {a:'FOC',al:'Focus',t:'Durante attività complesse:',o:['Mi distraggo facilmente','Alterno concentrazione e distrazioni','Mantengo concentrazione adeguata','Rimango focalizzato fino al completamento']},
+  {a:'ANA',al:'Analisi',t:"Di fronte a un problema:",o:["Agisco d'istinto","Valuto solo gli aspetti principali","Analizzo cause e conseguenze","Scompongo il problema in variabili dettagliate"]},
+  {a:'CRE',al:'Creatività',t:'Quando una procedura non funziona:',o:['Continuo ad applicarla','Chiedo come fare diversamente','Propongo adattamenti','Sviluppo soluzioni alternative innovative']},
+  {a:'REL',al:'Relazione',t:'Nei rapporti con i colleghi:',o:['Mantengo distanza','Interagisco solo se necessario','Collaboro in modo disponibile','Facilito attivamente il clima positivo']},
+  {a:'INF',al:'Influenza',t:"Quando propongo un'idea:",o:['Evito di espormi','La esprimo senza insistere','Argomento le mie ragioni','Coinvolgo gli altri per ottenere adesione']},
+  {a:'INT',al:'Integrità',t:'Se una decisione non è eticamente corretta:',o:['Mi adeguo','Evito il confronto','Espongo le mie perplessità','Mi oppongo in modo coerente e motivato']},
+  {a:'TRA',al:'Trasparenza',t:'Nella mia vita non ho mai commesso errori.',o:['Sempre vero','Spesso vero','Raramente vero','Mai vero'],inv:true},
+  {a:'TRA',al:'Trasparenza',t:'Mi capita di avere difficoltà come chiunque altro.',o:['Mai vero','Raramente vero','Spesso vero','Sempre vero']}
+];
+
+let curQ=0, ans=new Array(QQ.length).fill(null), candInfo={}, tests=[], selIdx=null;
+
+function show(id){
+  ['p-landing','p-form','p-test','p-done','p-hr'].forEach(p=>document.getElementById(p).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+// LANDING
+document.getElementById('go-candidato').onclick=()=>show('p-form');
+document.getElementById('go-hr').onclick=()=>{loadTests();loadKey();renderList();show('p-hr')};
+
+// FORM
+document.getElementById('form-back').onclick=()=>show('p-landing');
+document.getElementById('form-start').onclick=()=>{
+  const nome=document.getElementById('f-nome').value.trim();
+  if(!nome){alert('Inserisci il tuo nome.');return;}
+  candInfo={nome,ruolo:document.getElementById('f-ruolo').value.trim(),email:document.getElementById('f-email').value.trim(),data:new Date().toLocaleDateString('it-IT')};
+  curQ=0;ans=new Array(QQ.length).fill(null);
+  document.getElementById('t-name').textContent=nome;
+  show('p-test');renderQ();
+};
+
+// TEST
+function renderQ(){
+  const q=QQ[curQ],tot=QQ.length;
+  document.getElementById('t-prog-label').textContent=`Domanda ${curQ+1} di ${tot}`;
+  document.getElementById('t-prog-fill').style.width=`${((curQ+1)/tot)*100}%`;
+  document.getElementById('t-nav-info').textContent=`${ans.filter(x=>x!==null).length}/${tot}`;
+  document.getElementById('t-prev').style.visibility=curQ===0?'hidden':'visible';
+  document.getElementById('t-next').textContent=curQ===tot-1?'Completa ✓':'Successiva →';
+  document.getElementById('t-question').innerHTML=`
+    <div class="area-tag">${q.al}</div>
+    <div class="q-text">${q.t}</div>
+    <div class="options">
+      ${q.o.map((op,i)=>`<button class="opt${ans[curQ]===i?' sel':''}" data-i="${i}"><span class="opt-letter">${'ABCD'[i]}</span><span>${op}</span></button>`).join('')}
+    </div>`;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{ans[curQ]=+b.dataset.i;renderQ();});
+}
+document.getElementById('t-prev').onclick=()=>{if(curQ>0){curQ--;renderQ();}};
+document.getElementById('t-next').onclick=()=>{
+  if(ans[curQ]===null){alert('Seleziona una risposta.');return;}
+  if(curQ<QQ.length-1){curQ++;renderQ();}else submitTest();
+};
+
+function calcScores(){
+  const areas=['INI','AFF','MET','QUA','FOC','ANA','CRE','REL','INF','INT'];
+  const map={};const tra=[];
+  QQ.forEach((q,i)=>{
+    if(ans[i]===null)return;
+    const s=q.inv?(3-ans[i]):ans[i];
+    if(q.a==='TRA')tra.push(s);
+    else{if(!map[q.a])map[q.a]=[];map[q.a].push(s);}
+  });
+  const sc={};
+  areas.forEach(a=>{const v=map[a]||[];sc[a]=v.length?Math.round(v.reduce((x,y)=>x+y,0)/v.length/3*100):0;});
+  sc.TRA=tra.length?Math.round(tra.reduce((x,y)=>x+y,0)/tra.length/3*100):50;
+  return sc;
+}
+
+function submitTest(){
+  tests.push({candidato:candInfo,scores:calcScores(),ts:new Date().toISOString()});
+  saveTests();show('p-done');
+}
+
+document.getElementById('done-home').onclick=()=>show('p-landing');
+
+// STORAGE
+function saveTests(){try{localStorage.setItem('cm_tests',JSON.stringify(tests));}catch(e){}}
+function loadTests(){try{const d=localStorage.getItem('cm_tests');if(d)tests=JSON.parse(d);}catch(e){}}
+function saveKey(){try{localStorage.setItem('cm_key',document.getElementById('api-key').value.trim());}catch(e){}}
+function loadKey(){try{const k=localStorage.getItem('cm_key');if(k)document.getElementById('api-key').value=k;}catch(e){}}
+
+// HR
+document.getElementById('hr-home').onclick=()=>show('p-landing');
+document.getElementById('api-save').onclick=()=>{saveKey();alert('API Key salvata.');};
+
+function lv(s){
+  if(s<40)return{l:'Basso',c:'lv-basso',col:'#c0392b'};
+  if(s<60)return{l:'Medio',c:'lv-medio',col:'#e67e22'};
+  if(s<80)return{l:'Buono',c:'lv-buono',col:'#27ae60'};
+  return{l:'Elevato',c:'lv-elevato',col:'#8b4513'};
+}
+
+function renderList(){
+  const el=document.getElementById('hr-list');
+  if(!tests.length){el.innerHTML='<div class="empty"><div class="empty-title">Nessun candidato ancora</div><div>I test completati appariranno qui.</div></div>';return;}
+  el.innerHTML=`<div class="cand-list">${tests.map((t,i)=>`
+    <div class="cand-row${selIdx===i?' active':''}" data-i="${i}">
+      <div><div class="cand-name">${t.candidato.nome}</div><div class="cand-meta">${t.candidato.ruolo||'—'}</div></div>
+      <div class="cand-date">${t.candidato.data}</div>
+    </div>`).join('')}</div>`;
+  document.querySelectorAll('.cand-row').forEach(r=>r.onclick=()=>selectCand(+r.dataset.i));
+}
+
+function selectCand(i){
+  selIdx=i;const t=tests[i];
+  document.getElementById('d-nome').textContent=t.candidato.nome;
+  document.getElementById('d-meta').textContent=(t.candidato.ruolo||'')+(t.candidato.email?' · '+t.candidato.email:'')+' · '+t.candidato.data;
+  if(t.candidato.ruolo)document.getElementById('d-ruolo').value=t.candidato.ruolo;
+  renderScores(t.scores);renderTra(t.scores.TRA);
+  document.getElementById('d-report').innerHTML='';
+  document.getElementById('hr-detail').classList.remove('hidden');
+  renderList();
+}
+
+document.getElementById('d-close').onclick=()=>{selIdx=null;document.getElementById('hr-detail').classList.add('hidden');renderList();};
+
+function renderScores(sc){
+  const areas=['INI','AFF','MET','QUA','FOC','ANA','CRE','REL','INF','INT'];
+  document.getElementById('d-scores').innerHTML='<div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#7a7060;margin-bottom:18px">Punteggi per Area</div>'+
+    areas.map(a=>{const s=sc[a]||0,v=lv(s);return`<div class="bar-row"><div class="bar-label">${a}</div><div class="bar-track"><div class="bar-fill" style="width:${s}%;background:${v.col}"></div></div><div class="bar-val">${s}</div><div class="bar-level ${v.c}">${v.l}</div></div>`;}).join('');
+}
+
+function renderTra(tra){
+  const v=lv(tra);let note='';
+  if(tra<40)note=' · Attenzione: attendibilità limitata, valutare con cautela.';
+  else if(tra<60)note=' · Possibile desiderabilità sociale.';
+  document.getElementById('d-trasparenza').innerHTML=`<div class="notice"><strong>Trasparenza: ${tra} – ${v.l}</strong>${note||' · Attendibilità adeguata.'}</div>`;
+}
+
+document.getElementById('d-report-btn').onclick=generateReport;
+
+async function generateReport(){
+  const key=document.getElementById('api-key').value.trim();
+  if(!key){alert('Inserisci la API key Claude in alto.');return;}
+  const t=tests[selIdx];
+  const ruolo=document.getElementById('d-ruolo').value.trim()||t.candidato.ruolo||null;
+  const sc=t.scores;
+  const el=document.getElementById('d-report');
+  el.innerHTML='<div class="report-box"><div class="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Generazione report in corso...</span></div></div>';
+
+  const aree=[['INI','Iniziativa'],['AFF','Affidabilità'],['MET','Metodo'],['QUA','Qualità'],['FOC','Focus'],['ANA','Analisi'],['CRE','Creatività'],['REL','Relazione'],['INF','Influenza'],['INT','Integrità']];
+  const punteggi=aree.map(([k,l])=>`${k} – ${l}: ${sc[k]}`).join('\n');
+  const cond=[
+    sc.TRA<40?'- Trasparenza < 40: inserire nota attendibilità limitata':'',
+    Object.entries(sc).filter(([k])=>k!=='TRA').filter(([,v])=>v<40).length>3?'- Più di 3 aree sotto 40: evidenziare criticità sistemica':'',
+    Object.entries(sc).filter(([k])=>k!=='TRA').filter(([,v])=>v>80).length>4?'- Più di 4 aree sopra 80: valutare rischio sovraattivazione':'',
+    (sc.INI+sc.INF>150&&sc.AFF<50)?'- INI+INF > 150 con AFF < 50: rischio leadership non stabile':''
+  ].filter(Boolean).join('\n');
+
+  const prompt=`Sei un sistema HR professionale. Genera un Report di Valutazione completo per il candidato ${t.candidato.nome}.
+
+PUNTEGGI (0–100):
+${punteggi}
+TRASPARENZA: ${sc.TRA}
+${ruolo?'RUOLO TARGET: '+ruolo:'(nessun ruolo target)'}
+
+SOGLIE: 0–39=Basso, 40–59=Medio, 60–79=Buono, 80–100=Elevato
+
+STRUTTURA OBBLIGATORIA:
+1. SINTESI ESECUTIVA (max 12–15 righe)
+2. ANALISI DIMENSIONI COMPORTAMENTALI (tutte e 10 le aree)
+3. PATTERN DOMINANTI E DINAMICHE INTERNE
+4. INDICATORI DI FRIZIONE ORGANIZZATIVA
+5. RISCHI SITUAZIONALI
+6. CONDIZIONI ORGANIZZATIVE FAVORENTI
+7. COMPATIBILITÀ CON IL RUOLO TARGET ${ruolo?'(valuta per '+ruolo+')':'(ometti questa sezione)'}
+8. VALUTAZIONE FINALE (8–10 righe)
+
+STILE: consulenziale, tecnico HR, nessun emoji, nessun linguaggio informale, 1200–2000 parole.
+${cond?'REGOLE CONDIZIONALI:\n'+cond:''}`;
+
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-opus-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+    });
+    const d=await r.json();
+    if(d.error){el.innerHTML=`<div class="notice" style="border-color:#c0392b">Errore API: ${d.error.message}</div>`;return;}
+    const txt=d.content[0].text
+      .replace(/^#{1,3}\s*(.+)$/gm,'<h3>$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    el.innerHTML=`<div class="report-box"><div class="report-head"><div class="report-title">Report – ${t.candidato.nome}</div><button class="btn btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('report-out').innerText).then(()=>alert('Copiato!'))">Copia</button></div><div id="report-out">${txt}</div></div>`;
+  }catch(e){el.innerHTML=`<div class="notice" style="border-color:#c0392b">Errore: ${e.message}</div>`;}
+}
+
+loadTests();
+</script>
+</body>
+</html>
