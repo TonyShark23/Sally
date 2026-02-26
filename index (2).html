@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selly®</title>
+<style>
+:root {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --surface2: #fbfbfd;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.12);
+  --text: #1d1d1f;
+  --text2: #6e6e73;
+  --text3: #86868b;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-light: #e8f0fe;
+  --red: #ff3b30;
+  --orange: #ff9500;
+  --green: #34c759;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5}
+.hidden{display:none!important}
+.page{min-height:100vh}
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:52px;display:flex;align-items:center;gap:20px}
+.nav-logo{font-size:19px;font-weight:600;letter-spacing:-0.3px;color:var(--text)}
+.nav-logo sup{font-size:10px;vertical-align:super}
+.nav-tag{font-size:13px;color:var(--text3)}
+.nav-ml{margin-left:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 20px;border-radius:980px;border:none;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s ease;letter-spacing:-0.1px;white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-secondary{background:rgba(0,0,0,0.06);color:var(--text)}
+.btn-secondary:hover{background:rgba(0,0,0,0.1)}
+.btn-ghost{background:transparent;color:var(--accent);font-size:14px;padding:8px 14px}
+.btn-ghost:hover{background:var(--accent-light)}
+.btn-sm{padding:7px 16px;font-size:13px}
+.landing-hero{padding:80px 40px 48px;text-align:center}
+.landing-eyebrow{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.landing-h1{font-size:clamp(40px,6vw,68px);font-weight:600;letter-spacing:-1.5px;line-height:1.05;margin-bottom:20px}
+.landing-sub{font-size:19px;color:var(--text2);max-width:500px;margin:0 auto 48px;font-weight:300;line-height:1.6}
+.landing-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px;margin:0 auto;padding:0 24px 80px}
+.lcard{background:var(--surface);border-radius:var(--radius-lg);padding:36px 32px;text-align:left;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;transition:transform .25s ease,box-shadow .25s ease;border:1px solid var(--border)}
+.lcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.lcard-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:4px}
+.lcard-icon-blue{background:linear-gradient(135deg,#4facfe,#0071e3)}
+.lcard-icon-purple{background:linear-gradient(135deg,#a855f7,#6d28d9)}
+.lcard-title{font-size:20px;font-weight:600;letter-spacing:-0.3px}
+.lcard-desc{font-size:14px;color:var(--text2);line-height:1.6;flex:1}
+.form-page-wrap{max-width:520px;margin:0 auto;padding:56px 24px}
+.section-title{font-size:28px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px}
+.section-sub{font-size:15px;color:var(--text2);margin-bottom:36px;line-height:1.6}
+.field{margin-bottom:18px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:6px;letter-spacing:.02em}
+.input{width:100%;padding:12px 16px;border:1px solid var(--border2);border-radius:10px;background:var(--surface);font-family:inherit;font-size:15px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,113,227,.15)}
+.form-actions{display:flex;gap:10px;margin-top:28px}
+.test-wrap{max-width:660px;margin:0 auto;padding:44px 24px}
+.prog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-label{font-size:13px;color:var(--text3);font-weight:500}
+.prog-counter{font-size:13px;color:var(--text3)}
+.prog-bar{height:3px;background:rgba(0,0,0,.08);border-radius:3px;margin-bottom:44px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.q-card{background:var(--surface);border-radius:var(--radius-lg);padding:36px 32px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:20px}
+.q-area{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.q-text{font-size:20px;font-weight:500;letter-spacing:-0.3px;line-height:1.4;margin-bottom:28px}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1.5px solid var(--border2);border-radius:var(--radius);background:var(--surface2);cursor:pointer;transition:all .15s ease;text-align:left;font-family:inherit;font-size:14px;color:var(--text);line-height:1.5;width:100%}
+.opt:hover{border-color:var(--accent);background:var(--accent-light)}
+.opt.sel{border-color:var(--accent);background:var(--accent);color:#fff}
+.opt-badge{min-width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.opt.sel .opt-badge{background:rgba(255,255,255,.25)}
+.test-nav{display:flex;justify-content:space-between;align-items:center;padding:4px 0}
+.done-wrap{max-width:480px;margin:0 auto;padding:100px 24px;text-align:center}
+.done-icon{width:72px;height:72px;background:linear-gradient(135deg,#34c759,#30b353);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 28px;box-shadow:0 8px 24px rgba(52,199,89,.35)}
+.done-wrap h2{font-size:32px;font-weight:600;letter-spacing:-0.5px;margin-bottom:14px}
+.done-wrap p{color:var(--text2);line-height:1.7;margin-bottom:40px;font-size:16px}
+.hr-wrap{max-width:920px;margin:0 auto;padding:44px 24px}
+.hr-title{font-size:32px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px}
+.hr-sub{color:var(--text2);margin-bottom:32px;font-size:15px}
+.api-card{background:var(--surface);border-radius:var(--radius-lg);padding:22px 24px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:24px}
+.api-card-title{font-size:12px;font-weight:600;color:var(--text3);margin-bottom:12px;letter-spacing:.06em;text-transform:uppercase}
+.api-row{display:flex;gap:10px}
+.api-row .input{flex:1}
+.api-note{font-size:12px;color:var(--text3);margin-top:8px}
+.empty-state{text-align:center;padding:60px 24px;color:var(--text2)}
+.empty-state-icon{font-size:44px;margin-bottom:16px;opacity:.4}
+.empty-state-title{font-size:20px;font-weight:500;margin-bottom:8px;color:var(--text)}
+.cand-card{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:24px}
+.cand-row{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--border)}
+.cand-row:last-child{border-bottom:none}
+.cand-row:hover{background:var(--bg)}
+.cand-row.active{background:var(--accent-light)}
+.cand-name{font-size:16px;font-weight:500;letter-spacing:-0.2px}
+.cand-meta{font-size:13px;color:var(--text3);margin-top:2px}
+.cand-date{font-size:12px;color:var(--text3)}
+.detail-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+.detail-name{font-size:26px;font-weight:600;letter-spacing:-0.4px}
+.detail-meta{font-size:13px;color:var(--text3);margin-top:4px}
+.chart-card{background:var(--surface);border-radius:var(--radius-lg);padding:28px 24px 16px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:18px}
+.chart-card-title{font-size:12px;font-weight:600;color:var(--text3);margin-bottom:24px;letter-spacing:.06em;text-transform:uppercase}
+.chart-container{display:flex;align-items:flex-end;gap:8px;height:200px}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}
+.chart-val{font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px}
+.chart-bar-wrap{width:100%;display:flex;align-items:flex-end;justify-content:center;flex:1}
+.chart-bar{width:100%;border-radius:5px 5px 0 0;min-height:4px}
+.chart-area-label{font-size:9px;color:var(--text3);text-align:center;line-height:1.3;font-weight:500;margin-top:8px;width:100%}
+.chart-baseline{height:1px;background:var(--border2);margin-top:0}
+.notice-card{background:var(--surface);border-radius:var(--radius);padding:14px 18px;border:1px solid var(--border);font-size:13px;color:var(--text2);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.notice-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ruolo-row{display:flex;gap:12px;margin-bottom:20px;align-items:flex-end}
+.ruolo-row .field{flex:1;margin-bottom:0}
+.report-card{background:var(--surface);border-radius:var(--radius-lg);padding:32px;border:1px solid var(--border);box-shadow:var(--shadow);margin-top:20px}
+.report-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.report-card-title{font-size:18px;font-weight:600;letter-spacing:-0.3px}
+#report-out{font-size:14px;line-height:1.85;color:var(--text);white-space:pre-wrap}
+#report-out h3{font-size:15px;font-weight:600;letter-spacing:-0.2px;margin:24px 0 8px;color:var(--accent)}
+.loading{display:flex;align-items:center;gap:10px;color:var(--text3);font-size:14px;padding:24px 0}
+.dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+@media(max-width:600px){.landing-cards{grid-template-columns:1fr}.nav{padding:0 20px}.landing-hero{padding:48px 20px 32px}.field-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="p-landing" class="page">
+  <nav class="nav"><div class="nav-logo">Selly<sup>®</sup></div></nav>
+  <div class="landing-hero">
+    <div class="landing-eyebrow">Strumento di Valutazione</div>
+    <h1 class="landing-h1">Conosci le persone<br>prima di sceglierle.</h1>
+    <p class="landing-sub">Un approccio scientifico alla selezione del personale. Semplice per i candidati, potente per i recruiter.</p>
+  </div>
+  <div class="landing-cards">
+    <div class="lcard">
+      <div class="lcard-icon lcard-icon-blue">✦</div>
+      <div class="lcard-title">Candidato</div>
+      <div class="lcard-desc">Compila il questionario. Non esistono risposte giuste o sbagliate — rispondi con spontaneità.</div>
+      <button class="btn btn-primary" id="go-candidato">Inizia →</button>
+    </div>
+    <div class="lcard">
+      <div class="lcard-icon lcard-icon-purple">◈</div>
+      <div class="lcard-title">HR Manager</div>
+      <div class="lcard-desc">Accedi alla dashboard, visualizza i profili e genera report interpretativi completi.</div>
+      <button class="btn btn-secondary" id="go-hr">Dashboard →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FORM CANDIDATO -->
+<div id="p-form" class="page hidden">
+  <nav class="nav">
+    <div class="nav-logo">Selly<sup>®</sup></div>
+    <div class="nav-tag">Questionario</div>
+    <div class="nav-ml"><button class="btn btn-ghost btn-sm" id="form-back">← Indietro</button></div>
+  </nav>
+  <div class="form-page-wrap">
+    <div class="section-title">Iniziamo</div>
+    <div class="section-sub">Inserisci i tuoi dati prima di procedere con il questionario.</div>
+    <div class="field-row">
+      <div class="field"><label class="label">Nome *</label><input class="input" id="f-nome" type="text" placeholder="Mario"></div>
+      <div class="field"><label class="label">Cognome *</label><input class="input" id="f-cognome" type="text" placeholder="Rossi"></div>
+    </div>
+    <div class="field"><label class="label">Ruolo per cui ti candidi</label><input class="input" id="f-ruolo" type="text" placeholder="Es. Sales Manager"></div>
+    <div class="field-row">
+      <div class="field"><label class="label">Data di nascita</label><input class="input" id="f-dob" type="date"></div>
+      <div class="field"><label class="label">Telefono</label><input class="input" id="f-tel" type="tel" placeholder="+39 333 000 0000"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="label">Email</label><input class="input" id="f-email" type="email" placeholder="mario@email.com"></div>
+      <div class="field"><label class="label">Città / Paese di residenza</label><input class="input" id="f-citta" type="text" placeholder="Milano, Italia"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" id="form-back2">Indietro</button>
+      <button class="btn btn-primary" id="form-start">Continua →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEST -->
+<div id="p-test" class="page hidden">
+  <nav class="nav">
+    <div class="nav-logo">Selly<sup>®</sup></div>
+    <div class="nav-tag" id="t-name"></div>
+  </nav>
+  <div class="test-wrap">
+    <div class="prog-header">
+      <div class="prog-label" id="t-prog-label">Domanda 1 di 63</div>
+      <div class="prog-counter" id="t-nav-info"></div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="t-prog-fill" style="width:0%"></div></div>
+    <div class="q-card"><div id="t-question"></div></div>
+    <div class="test-nav">
+      <button class="btn btn-secondary btn-sm" id="t-prev">← Indietro</button>
+      <button class="btn btn-primary btn-sm" id="t-next">Avanti →</button>
+    </div>
+  </div>
+</div>
+
+<!-- DONE -->
+<div id="p-done" class="page hidden">
+  <nav class="nav"><div class="nav-logo">Selly<sup>®</sup></div></nav>
+  <div class="done-wrap">
+    <div class="done-icon">✓</div>
+    <h2>Tutto fatto!</h2>
+    <p>Il tuo questionario è stato completato con successo. Il team HR esaminerà il tuo profilo a breve.</p>
+    <button class="btn btn-secondary" id="done-home">← Torna alla home</button>
+  </div>
+</div>
+
+<!-- HR DASHBOARD -->
+<div id="p-hr" class="page hidden">
+  <nav class="nav">
+    <div class="nav-logo">Selly<sup>®</sup></div>
+    <div class="nav-tag">Dashboard</div>
+    <div class="nav-ml"><button class="btn btn-ghost btn-sm" id="hr-home">← Home</button></div>
+  </nav>
+  <div class="hr-wrap">
+    <div class="hr-title">Candidati</div>
+    <div class="hr-sub">Seleziona un profilo per analizzarlo e generare il report.</div>
+    <div class="api-card">
+      <div class="api-card-title">Configurazione API</div>
+      <div class="api-row">
+        <input class="input" id="api-key" type="password" placeholder="sk-ant-...">
+        <button class="btn btn-primary btn-sm" id="api-save">Salva</button>
+      </div>
+      <div class="api-note">La chiave rimane salvata solo nel tuo browser.</div>
+    </div>
+    <div id="hr-list"></div>
+    <div id="hr-detail" class="hidden">
+      <div class="detail-header">
+        <div>
+          <div class="detail-name" id="d-nome"></div>
+          <div class="detail-meta" id="d-meta"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="d-close">Chiudi ✕</button>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title">Profilo per Area</div>
+        <div class="chart-container" id="d-chart"></div>
+        <div class="chart-baseline"></div>
+      </div>
+      <div id="d-trasparenza"></div>
+      <div class="ruolo-row">
+        <div class="field">
+          <label class="label">Ruolo Target (opzionale)</label>
+          <input class="input" id="d-ruolo" type="text" placeholder="Es. Sales Manager, HR Business Partner...">
+        </div>
+        <button class="btn btn-primary" id="d-report-btn">Genera Report →</button>
+      </div>
+      <div id="d-report"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DOMANDE COMPLETE (60 + 3 trasparenza = 63)
+// ═══════════════════════════════════════════════
+const QQ = [
+// ── BLOCCO 1 – INIZIATIVA ──
+{b:1,al:'Iniziativa',t:'Stai lavorando su un progetto già avviato da tempo. Durante il lavoro ti accorgi che una piccola modifica potrebbe migliorare il flusso operativo, ma il tema non è mai stato messo sul tavolo. Qual è la tua reazione più naturale?',o:['Preparo una proposta concreta e la porto al responsabile con qualche esempio pratico.','Aspetto il prossimo momento ufficiale di confronto per capire se emerge l\'argomento.','Ne parlo prima informalmente con un collega per raccogliere un parere.','Valuto che probabilmente il processo è già stato pensato così per un motivo preciso.'],w:[1,0.66,0.33,0]},
+{b:1,al:'Iniziativa',t:'Ti viene affidato un incarico con margini di interpretazione e poche indicazioni operative. Come tendi a muoverti?',o:['Chiedo un confronto iniziale per chiarire aspettative e criteri di risultato.','Analizzo il contesto e definisco una possibile impostazione prima di partire.','Inizio a lavorare su una prima versione, così da avere qualcosa di concreto su cui confrontarmi.','Preferisco attendere indicazioni più strutturate prima di procedere.'],w:[0.33,0.66,1,0]},
+{b:1,al:'Iniziativa',t:'Un collega con cui collabori è in ritardo su una parte che incide anche sul tuo lavoro. Qual è l\'atteggiamento che senti più tuo?',o:['Segnalo la situazione al responsabile per tutelare l\'andamento del progetto.','Mi attivo direttamente con il collega per capire come sbloccare la situazione insieme.','Mi concentro sulla mia parte e tengo monitorata l\'evoluzione.','Do per scontato che ognuno gestisca autonomamente le proprie responsabilità.'],w:[0.66,1,0.33,0]},
+{b:1,al:'Iniziativa',t:'In riunione emerge una decisione secondaria su cui il gruppo sembra indeciso e nessuno prende posizione. Tu cosa fai di solito?',o:['Intervengo proponendo una direzione, così da facilitare la chiusura del punto.','Chiedo se qualcuno vuole esprimere un\'opinione prima di espormi.','Osservo l\'orientamento generale e mi allineo alla soluzione condivisa.','Ritengo corretto che sia il responsabile a decidere.'],w:[1,0.66,0.33,0]},
+{b:1,al:'Iniziativa',t:'Si presenta un\'opportunità non pianificata che potrebbe portare valore, ma non era prevista nelle priorità. Come ti comporti più spesso?',o:['La inserisco nel piano per discuterla in modo strutturato.','Valuto rapidamente l\'impatto e, se sostenibile, mi attivo per svilupparla.','Ne parlo con il team per capire se può avere senso esplorarla.','La tengo in considerazione per un momento più opportuno.'],w:[0,1,0.66,0.33]},
+{b:1,al:'Iniziativa',t:'Ti riconosci maggiormente in chi:',o:['Preferisce avere un quadro completo prima di muoversi.','Tende a esplorare le possibilità prima di definire una linea definitiva.','Si attiva anche in presenza di margini di incertezza, adattando il percorso strada facendo.','Valuta con attenzione i rischi prima di assumere iniziative personali.'],w:[0,0.66,1,0.33]},
+// Trasparenza 1
+{b:'TRA',al:'',t:'Nel tuo percorso professionale, come descriveresti il tuo rapporto con l\'errore?',o:['Mi è capitato di commettere errori significativi, ma li considero parte della crescita.','Cerco di ridurre al minimo gli errori, anche se qualche imprecisione può capitare.','In genere riesco a evitare errori rilevanti grazie alla mia attenzione.','Non ricordo situazioni in cui un mio errore abbia avuto un impatto concreto.'],w:[1,0.66,0.33,0],tra:true},
+
+// ── BLOCCO 2 – AFFIDABILITÀ ──
+{b:2,al:'Affidabilità',t:'Ti viene affidato un progetto con scadenza a medio termine. Dopo l\'entusiasmo iniziale, il lavoro diventa più ripetitivo. Come tendi a gestire questa fase?',o:['Alterno momenti di forte concentrazione a fasi meno produttive.','Se il progetto perde stimolo, tendo a ricalibrare le priorità.','Mantengo il ritmo, anche se la motivazione cala, perché l\'obiettivo resta prioritario.','Mi concentro sulle parti più interessanti, rimandando quelle più monotone.'],w:[0.66,0,1,0.33]},
+{b:2,al:'Affidabilità',t:'Ti capita di prendere un impegno aggiuntivo mentre hai già diverse attività in corso. Qual è l\'atteggiamento che ti rappresenta di più?',o:['Preferisco accettare e verificare più avanti la sostenibilità.','Valuto se riesco a rispettarlo e, se mi espongo, lo porto fino in fondo.','Accetto con entusiasmo e poi organizzo le attività strada facendo.','Tendo ad accettare per non creare frizioni, anche se il carico è alto.'],w:[0.33,1,0.66,0]},
+{b:2,al:'Affidabilità',t:'Un\'attività assegnata richiede più tempo del previsto e si sovrappone ad altre urgenze. Come reagisci di solito?',o:['Procedo per step, anche se alcune attività rischiano di slittare.','Mi focalizzo su ciò che genera impatto immediato, lasciando in sospeso il resto.','Ridefinisco le priorità ma mi assicuro che ogni impegno venga concluso.','Mi concentro sulle urgenze e recupero il resto appena possibile.'],w:[0.33,0,1,0.66]},
+{b:2,al:'Affidabilità',t:'Ti riconosci maggiormente in chi:',o:['Lavora meglio sotto pressione, anche se alcune cose restano in attesa.','Preferisce chiudere ciò che inizia prima di aprire nuovi fronti.','Si motiva maggiormente quando può cambiare spesso attività.','Si attiva su più attività contemporaneamente, gestendole in parallelo.'],w:[0.33,1,0,0.66]},
+{b:2,al:'Affidabilità',t:'Quando comunichi una scadenza o una promessa professionale, cosa accade più spesso?',o:['Se emergono ostacoli, rivedo le tempistiche con chi di competenza.','Preferisco non vincolarmi troppo su tempistiche precise.','Mi espongo con fiducia e poi mi impegno a rispettare l\'impegno preso.','Tendo a stimare con prudenza e rispettare quanto dichiarato.'],w:[0.33,0,0.66,1]},
+{b:2,al:'Affidabilità',t:'In periodi di carico elevato, il tuo modo di lavorare diventa:',o:['Più intenso, anche se con qualche oscillazione nel ritmo.','Reattivo: gestisco ciò che emerge momento per momento.','Selettivo: mi concentro su ciò che reputo più strategico.','Strutturato e orientato alla chiusura delle priorità.'],w:[0.66,0,0.33,1]},
+// Trasparenza 2
+{b:'TRA',al:'',t:'In contesti di tensione lavorativa, quale descrizione ti rappresenta di più?',o:['Cerco di mantenere equilibrio, anche se a volte posso reagire emotivamente.','Mantengo quasi sempre la calma, anche quando la situazione è complessa.','Riesco a restare lucido indipendentemente dal comportamento degli altri.','Non mi è mai capitato di perdere il controllo o reagire impulsivamente.'],w:[1,0.66,0.33,0],tra:true},
+
+// ── BLOCCO 3 – METODO ──
+{b:3,al:'Metodo',t:'Ti viene affidato un insieme di attività con scadenze diverse e priorità non completamente definite. Come ti muovi di solito?',o:['Procedo in parallelo su più fronti per non rallentare l\'avanzamento.','Mi prendo del tempo per definire una sequenza logica prima di partire.','Preferisco partire da ciò che mi è più chiaro e completarlo.','Inizio dalle attività che mi sembrano più urgenti, adattandomi strada facendo.'],w:[0.66,1,0,0.33]},
+{b:3,al:'Metodo',t:'Quando inizi un nuovo progetto:',o:['Mi confronto con il team per capire come organizzare le attività.','Preferisco vedere come evolve il lavoro prima di strutturarlo troppo.','Inizio a lavorare e strutturò il percorso mentre procedo.','Definisco prima obiettivi, passaggi chiave e possibili criticità.'],w:[0.33,0,0.66,1]},
+{b:3,al:'Metodo',t:'In presenza di imprevisti che modificano le priorità:',o:['Procedo in modo flessibile senza ridefinire formalmente le priorità.','Riorganizzo il piano adattandolo alla nuova situazione.','Mi concentro sull\'urgenza e recupero il resto successivamente.','Continuo con la pianificazione iniziale per non perdere il filo.'],w:[0,1,0.66,0.33]},
+{b:3,al:'Metodo',t:'Ti riconosci maggiormente in chi:',o:['Si orienta principalmente sulle richieste che emergono nel momento.','Lavora bene anche in contesti poco definiti.','Ha bisogno di una struttura chiara per lavorare al meglio.','Preferisce gestire le attività in modo spontaneo.'],w:[0,0.66,1,0.33]},
+{b:3,al:'Metodo',t:'Quando organizzi il tuo lavoro settimanale:',o:['Mi concentro sulle attività più urgenti giorno per giorno.','Preferisco non pianificare troppo rigidamente.','Pianifico in anticipo le attività principali e monitoro l\'avanzamento.','Tengo una traccia generale ma lascio spazio a modifiche quotidiane.'],w:[0.33,0,1,0.66]},
+{b:3,al:'Metodo',t:'Se un\'attività richiede coordinamento tra più persone:',o:['Mi adatto alla modalità organizzativa già presente.','Definisco ruoli e passaggi prima di iniziare.','Avvio il lavoro e chiarisco gli aspetti organizzativi durante il percorso.','Mi confronto con i colleghi e poi procedo in modo flessibile.'],w:[0,1,0.33,0.66]},
+// Trasparenza 3
+{b:'TRA',al:'',t:'Nel corso della tua esperienza lavorativa, come descriveresti la tua evoluzione nel modo di lavorare?',o:['Ho modificato nel tempo il mio approccio, anche rivedendo convinzioni iniziali.','Ho mantenuto uno stile abbastanza stabile, con alcuni aggiustamenti progressivi.','Il mio modo di lavorare è sempre stato coerente e lineare nel tempo.','Ho sempre avuto fin dall\'inizio un metodo definito che non ho mai sentito il bisogno di cambiare.'],w:[1,0.66,0.33,0],tra:true},
+
+// ── BLOCCO 4 – QUALITÀ ──
+{b:4,al:'Qualità',t:'Stai completando un\'attività già quasi conclusa quando noti una piccola imprecisione che richiederebbe tempo per essere sistemata. Come ti comporti più spesso?',o:['Se l\'imprecisione non incide in modo sostanziale, procedo comunque.','Valuto l\'impatto concreto e decido se intervenire o meno.','Preferisco sistemarla prima di considerare il lavoro chiuso.','Lascio eventuali correzioni a una fase successiva di revisione.'],w:[0.33,0.66,1,0]},
+{b:4,al:'Qualità',t:'In presenza di una procedura interna poco chiara:',o:['La seguo per quanto possibile, adattandomi alle necessità operative.','Mi attengo alle indicazioni esistenti anche se non sono perfettamente definite.','Procedo come ritengo più efficace, anche se non formalizzato.','Cerco di chiarirla prima di procedere, per evitare ambiguità.'],w:[0.66,0.33,0,1]},
+{b:4,al:'Qualità',t:'Quando lavori su un documento o un\'attività tecnica:',o:['Mi concentro sul contenuto principale, i dettagli possono essere rivisti.','Tendo a ricontrollare prima di considerarlo definitivo.','Preferisco completarlo rapidamente e ottimizzarlo in seguito.','Mi affido a una revisione esterna per eventuali correzioni.'],w:[0.33,1,0.66,0]},
+{b:4,al:'Qualità',t:'Ti riconosci maggiormente in chi:',o:['Privilegia la rapidità, mantenendo uno standard adeguato.','Ritiene fondamentale che ogni dettaglio sia coerente e verificato.','Lavora meglio quando può procedere senza troppe rigidità formali.','Si concentra sull\'obiettivo generale più che sulla forma.'],w:[0.66,1,0,0.33]},
+{b:4,al:'Qualità',t:'Se un errore viene segnalato su un tuo lavoro:',o:['Lo correggo e analizzo come evitarlo in futuro.','Lo sistemo rapidamente per non rallentare il flusso operativo.','Valuto se l\'errore ha realmente un impatto significativo.','Ritengo che in un contesto dinamico qualche imprecisione sia inevitabile.'],w:[1,0.66,0.33,0]},
+{b:4,al:'Qualità',t:'Quando una consegna ha una scadenza stretta:',o:['Mantengo lo standard abituale anche se richiede più impegno.','Adatto il livello di dettaglio alla priorità del momento.','Mi concentro sugli elementi essenziali.','Privilegio il rispetto della scadenza rispetto alla rifinitura.'],w:[1,0.66,0.33,0]},
+
+// ── BLOCCO 5 – FOCUS ──
+{b:5,al:'Focus',t:'Stai lavorando su un\'attività complessa quando arrivano nuove richieste urgenti. Come reagisci più spesso?',o:['Valuto rapidamente le nuove richieste e mi riorganizzo di conseguenza.','Completo ciò che sto facendo prima di dedicarmi ad altro.','Mi sposto subito sulle urgenze e riprendo il resto più tardi.','Gestisco le attività in parallelo per non rallentare il flusso.'],w:[0.66,1,0.33,0]},
+{b:5,al:'Focus',t:'Quando lavori su un compito che richiede attenzione prolungata:',o:['Preferisco alternarlo con altre attività per mantenere energia.','Mi immergo completamente fino a quando non raggiungo un punto di chiusura.','Mantengo un ritmo costante, anche se con qualche pausa di verifica.','Mi attivo su più fronti per non perdere eventuali opportunità.'],w:[0.33,1,0.66,0]},
+{b:5,al:'Focus',t:'In ambienti dinamici e ricchi di stimoli:',o:['Riesco a mantenere una linea di lavoro stabile.','Mi adatto alle richieste emergenti riorganizzando le priorità.','Tendo a seguire ciò che richiede attenzione immediata.','Mi sento stimolato dal continuo cambiamento di input.'],w:[1,0.66,0.33,0]},
+{b:5,al:'Focus',t:'Ti riconosci maggiormente in chi:',o:['Lavora meglio quando può dedicarsi a una cosa per volta.','Riesce a gestire più attività contemporaneamente con buona efficacia.','Si attiva soprattutto sulle richieste che emergono nel momento.','Preferisce ambienti in cui il ritmo è rapido e variabile.'],w:[1,0.66,0.33,0]},
+{b:5,al:'Focus',t:'Quando ricevi notifiche o interruzioni frequenti durante il lavoro:',o:['Le gestisco subito per liberarmi la mente.','Le ignoro temporaneamente per non perdere concentrazione.','Le valuto e decido caso per caso se intervenire.','Mi adatto al flusso continuo di comunicazioni.'],w:[0.33,1,0.66,0]},
+{b:5,al:'Focus',t:'Se un\'attività richiede molte ore consecutive di attenzione:',o:['Organizzo il lavoro in blocchi definiti per mantenere qualità e continuità.','Procedo fino a quando sento calare l\'attenzione, poi cambio attività.','Mantengo il ritmo alternando momenti di intensità e brevi pause.','Preferisco suddividerla in parti diverse distribuite nel tempo.'],w:[1,0.33,0.66,0]},
+
+// ── BLOCCO 6 – ANALISI ──
+{b:6,al:'Analisi',t:'Di fronte a un problema nuovo e non immediatamente chiaro:',o:['Raccolgo più informazioni possibili prima di formulare un\'ipotesi.','Mi affido all\'esperienza maturata in situazioni simili.','Individuo rapidamente una direzione e la verifico strada facendo.','Procedo con la soluzione che sembra più pratica nel momento.'],w:[1,0.66,0.33,0]},
+{b:6,al:'Analisi',t:'Quando ricevi dati contrastanti su una situazione:',o:['Mi concentro sugli elementi che reputo più rilevanti.','Analizzo le fonti per capire da dove nasce la divergenza.','Valuto quale interpretazione sia più coerente con il contesto.','Scelgo l\'opzione che permette di procedere più rapidamente.'],w:[0.33,1,0.66,0]},
+{b:6,al:'Analisi',t:'Se una decisione deve essere presa in tempi stretti:',o:['Definisco i criteri minimi per decidere con lucidità.','Raccolgo tutti i dati disponibili prima di esprimermi.','Mi affido alla prima valutazione che mi sembra sensata.','Procedo in base alla soluzione più immediata.'],w:[0.66,1,0.33,0]},
+{b:6,al:'Analisi',t:'Ti riconosci maggiormente in chi:',o:['Preferisce comprendere a fondo prima di agire.','Si orienta rapidamente e aggiusta il tiro in seguito.','Valuta alternative possibili prima di scegliere.','Decide in base all\'efficacia immediata.'],w:[1,0.33,0.66,0]},
+{b:6,al:'Analisi',t:'Quando un\'idea sembra funzionare:',o:['La applico e ne osservo l\'evoluzione nel tempo.','Cerco di individuare eventuali criticità prima di adottarla stabilmente.','Valuto rapidamente se può portare risultato nel breve periodo.','Mi affido al fatto che sia già stata sperimentata da altri.'],w:[0.33,1,0.66,0]},
+{b:6,al:'Analisi',t:'In una discussione complessa:',o:['Mi soffermo sui dettagli per comprendere tutte le implicazioni.','Mi concentro sugli aspetti centrali evitando dispersioni.','Tendo a orientarmi verso la soluzione più concreta.','Seguo il flusso della conversazione senza analizzare ogni punto.'],w:[1,0.66,0.33,0]},
+
+// ── BLOCCO 7 – CREATIVITÀ ──
+{b:7,al:'Creatività',t:'Un processo consolidato funziona, ma potrebbe essere migliorato. Come ti comporti più spesso?',o:['Valuto se introdurre piccole modifiche senza stravolgere l\'impianto.','Propongo un\'alternativa concreta che possa ottimizzare il risultato.','Preferisco mantenerlo stabile se non presenta criticità evidenti.','Lo utilizzo così com\'è, concentrandomi sull\'esecuzione.'],w:[0.66,1,0.33,0]},
+{b:7,al:'Creatività',t:'Di fronte a un ostacolo imprevisto:',o:['Cerco una soluzione alternativa anche fuori dallo schema abituale.','Mi attengo alle procedure già definite.','Valuto le opzioni disponibili e scelgo la più funzionale.','Preferisco attendere indicazioni prima di modificare l\'approccio.'],w:[1,0.33,0.66,0]},
+{b:7,al:'Creatività',t:'Quando un\'idea nuova viene proposta nel team:',o:['Ne valuto l\'impatto pratico prima di esprimermi.','Mi concentro su eventuali rischi o limiti operativi.','Sono curioso di esplorarne le potenzialità.','Preferisco affidarmi a soluzioni già sperimentate.'],w:[0.66,0.33,1,0]},
+{b:7,al:'Creatività',t:'Ti riconosci maggiormente in chi:',o:['Si sente stimolato quando può sperimentare modalità diverse.','Lavora meglio in contesti strutturati e prevedibili.','Adatta il proprio approccio in base al contesto.','Preferisce attenersi a metodi già validati.'],w:[1,0.33,0.66,0]},
+{b:7,al:'Creatività',t:'Se un progetto non sta producendo i risultati attesi:',o:['Analizzo cosa non sta funzionando prima di modificare l\'impostazione.','Propongo un cambio di strategia anche parziale.','Continuo con l\'impostazione iniziale per non creare discontinuità.','Attendo indicazioni prima di intervenire.'],w:[0.66,1,0.33,0]},
+{b:7,al:'Creatività',t:'Quando ti trovi in un contesto nuovo:',o:['Mi prendo tempo per comprendere le regole prima di intervenire.','Provo a individuare spazi in cui introdurre idee o miglioramenti.','Osservo come funziona il sistema e mi adatto progressivamente.','Preferisco seguire le modalità già consolidate.'],w:[0.33,1,0.66,0]},
+
+// ── BLOCCO 8 – RELAZIONE ──
+{b:8,al:'Relazione',t:'Durante una riunione noti che un collega sembra poco coinvolto. Come tendi a comportarti?',o:['Mi concentro sull\'obiettivo della riunione, lasciando che ognuno gestisca il proprio coinvolgimento.','Cerco di capire se c\'è qualcosa che non sta funzionando nel clima del gruppo.','Valuto se la sua posizione incide realmente sull\'andamento del lavoro.','Ritengo che spetti a lui esprimersi se necessario.'],w:[0.33,1,0.66,0]},
+{b:8,al:'Relazione',t:'Se un collega esprime un disaccordo nei tuoi confronti:',o:['Cerco di comprendere le motivazioni prima di difendere la mia posizione.','Mi concentro sugli aspetti concreti della questione.','Difendo il mio punto di vista se ritengo di avere ragione.','Preferisco evitare un confronto diretto.'],w:[1,0.66,0.33,0]},
+{b:8,al:'Relazione',t:'In un contesto di tensione tra membri del team:',o:['Mi tengo focalizzato sulle attività operative.','Intervengo per facilitare un chiarimento costruttivo.','Valuto chi ha maggiore responsabilità nella situazione.','Ritengo che le dinamiche personali non debbano interferire con il lavoro.'],w:[0.33,1,0.66,0]},
+{b:8,al:'Relazione',t:'Ti riconosci maggiormente in chi:',o:['Ascolta prima di formulare una posizione.','Va dritto al punto evitando troppe sfumature.','Tiene conto del clima generale prima di intervenire.','Si concentra principalmente sugli obiettivi da raggiungere.'],w:[1,0.33,0.66,0]},
+{b:8,al:'Relazione',t:'Quando collabori con persone molto diverse da te:',o:['Cerco punti di contatto per facilitare la collaborazione.','Mi adatto finché il risultato viene raggiunto.','Mi concentro sulle mie responsabilità indipendentemente dalle differenze.','Preferisco interagire con modalità che mi sono più familiari.'],w:[1,0.66,0.33,0]},
+{b:8,al:'Relazione',t:'Se percepisci che una tua decisione ha creato malumore:',o:['Verifico apertamente l\'impatto che ha avuto sugli altri.','Valuto se il malumore incide realmente sui risultati.','Ritengo che non tutte le decisioni possano essere condivise.','Preferisco non soffermarmi su reazioni emotive.'],w:[1,0.66,0.33,0]},
+
+// ── BLOCCO 9 – INFLUENZA ──
+{b:9,al:'Influenza',t:'In un team manca una direzione chiara e il gruppo appare indeciso. Come ti muovi più spesso?',o:['Mi confronto con alcuni membri per capire quale orientamento possa funzionare meglio.','Attendo che chi ha la responsabilità formale prenda posizione.','Propongo una direzione, assumendomi la responsabilità di avviarla.','Preferisco osservare l\'evoluzione prima di intervenire.'],w:[0.66,0,1,0.33]},
+{b:9,al:'Influenza',t:'Se una decisione condivisa non ti convince del tutto:',o:['Mi allineo alla decisione del gruppo per mantenere coesione.','Esprimo il mio punto di vista argomentandolo in modo diretto.','Valuto se il disaccordo ha un impatto concreto sui risultati.','Preferisco parlarne in un secondo momento con chi ha deciso.'],w:[0.33,1,0.66,0]},
+{b:9,al:'Influenza',t:'Quando devi motivare qualcuno su un\'attività poco stimolante:',o:['Spiego il senso dell\'obiettivo e il valore del contributo richiesto.','Mi concentro sulle scadenze da rispettare.','Cerco un compromesso tra ciò che va fatto e le preferenze della persona.','Ritengo che ognuno debba trovare autonomamente la propria motivazione.'],w:[1,0.33,0.66,0]},
+{b:9,al:'Influenza',t:'Ti riconosci maggiormente in chi:',o:['Preferisce guidare con l\'esempio piuttosto che con indicazioni dirette.','Si assume la responsabilità di orientare il gruppo quando necessario.','Si concentra sul proprio ruolo senza intervenire nelle dinamiche altrui.','Lascia che le decisioni emergano spontaneamente dal gruppo.'],w:[0.66,1,0.33,0]},
+{b:9,al:'Influenza',t:'In una situazione di conflitto aperto tra colleghi:',o:['Intervengo per facilitare un confronto costruttivo.','Mi mantengo neutrale finché non è necessario espormi.','Ritengo che il conflitto possa chiarirsi autonomamente.','Mi concentro sulle attività operative senza entrare nella dinamica.'],w:[1,0.66,0.33,0]},
+{b:9,al:'Influenza',t:'Quando un progetto rischia di deragliare:',o:['Segnalo le criticità e propongo un piano di riallineamento.','Mi concentro sulla mia parte per garantire almeno la mia area.','Mi confronto con il team per ridefinire insieme le priorità.','Attendo indicazioni prima di modificare l\'assetto operativo.'],w:[1,0.33,0.66,0]},
+
+// ── BLOCCO 10 – INTEGRITÀ ──
+{b:10,al:'Integrità',t:'Ti accorgi di un errore che potrebbe passare inosservato e che non ti riguarda direttamente. Come ti comporti più spesso?',o:['Valuto se l\'errore ha un impatto reale prima di intervenire.','Ritengo che spetti a chi è coinvolto gestirlo.','Lo segnalo per evitare possibili conseguenze future.','Preferisco non espormi se non è di mia competenza.'],w:[0.66,0.33,1,0]},
+{b:10,al:'Integrità',t:'In una situazione in cui una decisione del team potrebbe penalizzarti personalmente:',o:['Mi allineo comunque se ritengo che sia la scelta migliore per il gruppo.','Espongo il mio punto di vista cercando un equilibrio tra interesse personale e collettivo.','Valuto quanto l\'impatto su di me sia rilevante prima di decidere.','Mi tutelo prima di considerare l\'interesse generale.'],w:[1,0.66,0.33,0]},
+{b:10,al:'Integrità',t:'Se ricevi un riconoscimento per un risultato frutto di lavoro condiviso:',o:['Condivido apertamente il merito con chi ha contribuito.','Ringrazio il team in modo generale.','Accetto il riconoscimento, consapevole del lavoro svolto.','Ritengo che sia naturale che il merito vada a chi rappresenta il progetto.'],w:[1,0.66,0.33,0]},
+{b:10,al:'Integrità',t:'Ti riconosci maggiormente in chi:',o:['Mantiene coerenza anche quando potrebbe trarne un vantaggio personale.','Valuta le situazioni caso per caso.','Si adatta al contesto per tutelare la propria posizione.','Considera prioritario non esporsi inutilmente.'],w:[1,0.66,0.33,0]},
+{b:10,al:'Integrità',t:'Se una scelta organizzativa non è formalmente corretta ma accelera i risultati:',o:['Valuto rischi e benefici prima di procedere.','Mi attengo alle regole anche se rallentano il processo.','Se il risultato è positivo, ritengo accettabile una certa flessibilità.','Mi adeguo a ciò che viene deciso senza approfondire.'],w:[0.66,1,0.33,0]},
+{b:10,al:'Integrità',t:'Quando prometti qualcosa in ambito professionale:',o:['Mi espongo solo se sono certo di poter mantenere l\'impegno.','Mi impegno a fare il possibile per rispettarlo.','Valuto successivamente la sostenibilità dell\'impegno preso.','Preferisco mantenere una certa flessibilità sugli accordi.'],w:[1,0.66,0.33,0]}
+];
+
+// ═══════════════════════════════════════════════
+// TABELLA PESI INCROCIATI (blocco → aree)
+// Ogni riga = contributo % del blocco alle 10 aree
+// ═══════════════════════════════════════════════
+const CROSS = {
+  1:  {INI:60,AFF:0, MET:15,QUA:0, FOC:0, ANA:5, CRE:0, REL:10,INF:10,INT:0 },
+  2:  {INI:5, AFF:60,MET:15,QUA:0, FOC:15,ANA:0, CRE:0, REL:0, INF:0, INT:5 },
+  3:  {INI:5, AFF:5, MET:60,QUA:0, FOC:15,ANA:15,CRE:0, REL:0, INF:0, INT:0 },
+  4:  {INI:0, AFF:10,MET:15,QUA:60,FOC:10,ANA:0, CRE:0, REL:0, INF:0, INT:5 },
+  5:  {INI:5, AFF:10,MET:15,QUA:0, FOC:60,ANA:10,CRE:0, REL:0, INF:0, INT:0 },
+  6:  {INI:5, AFF:0, MET:15,QUA:0, FOC:10,ANA:60,CRE:10,REL:0, INF:0, INT:0 },
+  7:  {INI:15,AFF:0, MET:10,QUA:0, FOC:0, ANA:10,CRE:60,REL:0, INF:5, INT:0 },
+  8:  {INI:10,AFF:0, MET:0, QUA:0, FOC:5, ANA:0, CRE:0, REL:60,INF:15,INT:10},
+  9:  {INI:10,AFF:0, MET:5, QUA:0, FOC:0, ANA:0, CRE:0, REL:15,INF:60,INT:10},
+  10: {INI:0, AFF:15,MET:5, QUA:0, FOC:0, ANA:0, CRE:0, REL:10,INF:10,INT:60}
+};
+
+const AREAS = ['INI','AFF','MET','QUA','FOC','ANA','CRE','REL','INF','INT'];
+const AREA_FULL = {INI:'Iniziativa',AFF:'Affidabilità',MET:'Metodo',QUA:'Qualità',FOC:'Focus',ANA:'Analisi',CRE:'Creatività',REL:'Relazione',INF:'Influenza',INT:'Integrità'};
+const AREA_COLORS = {INI:'#0071e3',AFF:'#34c759',MET:'#5856d6',QUA:'#ff9500',FOC:'#ff3b30',ANA:'#ac39d4',CRE:'#ff6b35',REL:'#00c7be',INF:'#30b0c7',INT:'#1c8c4e'};
+
+let curQ=0, ans=new Array(QQ.length).fill(null), candInfo={}, tests=[], selIdx=null;
+
+function show(id){
+  ['p-landing','p-form','p-test','p-done','p-hr'].forEach(p=>document.getElementById(p).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+document.getElementById('go-candidato').onclick=()=>show('p-form');
+document.getElementById('go-hr').onclick=()=>{loadTests();loadKey();renderList();show('p-hr');};
+document.getElementById('form-back').onclick=()=>show('p-landing');
+document.getElementById('form-back2').onclick=()=>show('p-landing');
+document.getElementById('form-start').onclick=()=>{
+  const nome=document.getElementById('f-nome').value.trim();
+  const cognome=document.getElementById('f-cognome').value.trim();
+  if(!nome||!cognome){alert('Inserisci nome e cognome.');return;}
+  candInfo={nome:nome+' '+cognome,ruolo:document.getElementById('f-ruolo').value.trim(),email:document.getElementById('f-email').value.trim(),tel:document.getElementById('f-tel').value.trim(),dob:document.getElementById('f-dob').value,citta:document.getElementById('f-citta').value.trim(),data:new Date().toLocaleDateString('it-IT')};
+  curQ=0;ans=new Array(QQ.length).fill(null);
+  document.getElementById('t-name').textContent=candInfo.nome;
+  show('p-test');renderQ();
+};
+
+function renderQ(){
+  const q=QQ[curQ],tot=QQ.length;
+  document.getElementById('t-prog-label').textContent='Domanda '+(curQ+1)+' di '+tot;
+  document.getElementById('t-prog-fill').style.width=(((curQ+1)/tot)*100)+'%';
+  document.getElementById('t-nav-info').textContent=ans.filter(x=>x!==null).length+' completate';
+  document.getElementById('t-prev').style.visibility=curQ===0?'hidden':'visible';
+  document.getElementById('t-next').textContent=curQ===tot-1?'Completa ✓':'Avanti →';
+  const areaLabel = q.tra ? 'Riflessione personale' : q.al;
+  document.getElementById('t-question').innerHTML=
+    '<div class="q-area">'+areaLabel+'</div>'+
+    '<div class="q-text">'+q.t+'</div>'+
+    '<div class="options">'+
+    q.o.map((op,i)=>'<button class="opt'+(ans[curQ]===i?' sel':'')+'" data-i="'+i+'"><span class="opt-badge">'+'ABCD'[i]+'</span><span>'+op+'</span></button>').join('')+
+    '</div>';
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{ans[curQ]=+b.dataset.i;renderQ();});
+}
+
+document.getElementById('t-prev').onclick=()=>{if(curQ>0){curQ--;renderQ();}};
+document.getElementById('t-next').onclick=()=>{
+  if(ans[curQ]===null){alert('Seleziona una risposta per continuare.');return;}
+  if(curQ<QQ.length-1){curQ++;renderQ();}else submitTest();
+};
+
+// ═══════════════════════════════════════════════
+// CALCOLO PUNTEGGI CON PESI INCROCIATI
+// ═══════════════════════════════════════════════
+function calcScores(){
+  // Accumulo per blocco: somma punteggi domande non-TRA
+  const blockScores = {};
+  for(let b=1;b<=10;b++) blockScores[b]={sum:0,max:0};
+  const traScores = [];
+
+  QQ.forEach((q,i)=>{
+    if(ans[i]===null) return;
+    const w = q.w[ans[i]]; // 0, 0.33, 0.66, 1
+    if(q.tra){
+      traScores.push(w);
+    } else {
+      blockScores[q.b].sum += w;
+      blockScores[q.b].max += 1; // max per domanda = 1
+    }
+  });
+
+  // Normalizza ogni blocco 0-100
+  const blockPct = {};
+  for(let b=1;b<=10;b++){
+    blockPct[b] = blockScores[b].max > 0 ? (blockScores[b].sum / blockScores[b].max) * 100 : 0;
+  }
+
+  // Applica pesi incrociati per ogni area
+  const sc = {};
+  AREAS.forEach(area=>{
+    let totalWeight = 0;
+    let weightedSum = 0;
+    for(let b=1;b<=10;b++){
+      const w = CROSS[b][area];
+      if(w > 0){
+        weightedSum += blockPct[b] * w;
+        totalWeight += w;
+      }
+    }
+    sc[area] = totalWeight > 0 ? Math.round(weightedSum / totalWeight) : 0;
+  });
+
+  // Trasparenza separata
+  sc.TRA = traScores.length > 0 ? Math.round(traScores.reduce((a,b)=>a+b,0)/traScores.length*100) : 50;
+
+  return sc;
+}
+
+function submitTest(){
+  tests.push({candidato:candInfo,scores:calcScores(),ts:new Date().toISOString()});
+  saveTests();show('p-done');
+}
+document.getElementById('done-home').onclick=()=>show('p-landing');
+
+function saveTests(){try{localStorage.setItem('selly_tests',JSON.stringify(tests));}catch(e){}}
+function loadTests(){try{const d=localStorage.getItem('selly_tests');if(d)tests=JSON.parse(d);}catch(e){}}
+function saveKey(){try{localStorage.setItem('selly_key',document.getElementById('api-key').value.trim());}catch(e){}}
+function loadKey(){try{const k=localStorage.getItem('selly_key');if(k)document.getElementById('api-key').value=k;}catch(e){}}
+
+document.getElementById('hr-home').onclick=()=>show('p-landing');
+document.getElementById('api-save').onclick=()=>{saveKey();alert('API Key salvata.');};
+
+function lv(s){
+  if(s<40)return{l:'Critica',col:'#ff3b30'};
+  if(s<60)return{l:'Fragile',col:'#ff9500'};
+  if(s<75)return{l:'Funzionale',col:'#34c759'};
+  if(s<90)return{l:'Solida',col:'#0071e3'};
+  return{l:'Dominante',col:'#5856d6'};
+}
+
+function renderList(){
+  const el=document.getElementById('hr-list');
+  if(!tests.length){el.innerHTML='<div class="empty-state"><div class="empty-state-icon">◻</div><div class="empty-state-title">Nessun candidato ancora</div><div>I questionari completati appariranno qui.</div></div>';return;}
+  el.innerHTML='<div class="cand-card">'+tests.map((t,i)=>'<div class="cand-row'+(selIdx===i?' active':'')+'" data-i="'+i+'"><div><div class="cand-name">'+t.candidato.nome+'</div><div class="cand-meta">'+(t.candidato.ruolo||'—')+(t.candidato.citta?' · '+t.candidato.citta:'')+'</div></div><div style="display:flex;align-items:center;gap:12px"><div class="cand-date">'+t.candidato.data+'</div><div style="color:var(--text3)">›</div></div></div>').join('')+'</div>';
+  document.querySelectorAll('.cand-row').forEach(r=>r.onclick=()=>selectCand(+r.dataset.i));
+}
+
+function selectCand(i){
+  selIdx=i;const t=tests[i];
+  document.getElementById('d-nome').textContent=t.candidato.nome;
+  document.getElementById('d-meta').textContent=[t.candidato.ruolo,t.candidato.email,t.candidato.tel,t.candidato.citta].filter(Boolean).join(' · ')+' · '+t.candidato.data;
+  if(t.candidato.ruolo)document.getElementById('d-ruolo').value=t.candidato.ruolo;
+  renderChart(t.scores);renderTra(t.scores.TRA);
+  document.getElementById('d-report').innerHTML='';
+  document.getElementById('hr-detail').classList.remove('hidden');
+  renderList();
+  setTimeout(()=>document.getElementById('hr-detail').scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+document.getElementById('d-close').onclick=()=>{selIdx=null;document.getElementById('hr-detail').classList.add('hidden');renderList();};
+
+function renderChart(sc){
+  document.getElementById('d-chart').innerHTML=AREAS.map(a=>{
+    const s=sc[a]||0,col=AREA_COLORS[a],h=Math.max(s,4);
+    return '<div class="chart-col"><div class="chart-val">'+s+'</div><div class="chart-bar-wrap"><div class="chart-bar" style="height:'+h+'%;background:'+col+';opacity:.85"></div></div><div class="chart-area-label">'+AREA_FULL[a]+'</div></div>';
+  }).join('');
+}
+
+function renderTra(tra){
+  let col,msg;
+  if(tra>=60){col='#34c759';msg='Profilo coerente e leggibile.';}
+  else if(tra>=40){col='#ff9500';msg='Leggera desiderabilità sociale. Risultati indicativi.';}
+  else{col='#ff3b30';msg='Attenzione: profilo poco trasparente. Leggere con cautela.';}
+  document.getElementById('d-trasparenza').innerHTML='<div class="notice-card"><div class="notice-dot" style="background:'+col+'"></div><div><strong>Indice di Trasparenza: '+tra+'%</strong> &nbsp;·&nbsp; '+msg+'</div></div>';
+}
+
+document.getElementById('d-report-btn').onclick=generateReport;
+
+async function generateReport(){
+  const key=document.getElementById('api-key').value.trim();
+  if(!key){alert('Inserisci la API key nella sezione in alto.');return;}
+  const t=tests[selIdx],ruolo=document.getElementById('d-ruolo').value.trim()||t.candidato.ruolo||null,sc=t.scores;
+  const el=document.getElementById('d-report');
+  el.innerHTML='<div class="report-card"><div class="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span>Generazione report in corso...</span></div></div>';
+
+  const punteggi=AREAS.map(a=>a+' – '+AREA_FULL[a]+': '+sc[a]+'%').join('\n');
+
+  const fasce=AREAS.map(a=>{
+    const s=sc[a];
+    let f;
+    if(s<40)f='Area Critica';
+    else if(s<60)f='Area Fragile';
+    else if(s<75)f='Area Funzionale';
+    else if(s<90)f='Area Solida';
+    else f='Area Dominante';
+    return AREA_FULL[a]+': '+s+'% ('+f+')';
+  }).join('\n');
+
+  const cond=[
+    sc.TRA<40?'- Trasparenza < 40%: profilo poco affidabile, evidenziare in modo prominente':'',
+    sc.TRA>=40&&sc.TRA<60?'- Trasparenza 40-60%: possibile desiderabilità sociale, segnalare':'',
+    AREAS.filter(a=>sc[a]<40).length>3?'- Più di 3 aree Critiche: evidenziare criticità sistemica del profilo':'',
+    AREAS.filter(a=>sc[a]>=90).length>4?'- Più di 4 aree Dominanti: valutare rischio sovraattivazione o profilo idealizzato':'',
+    (sc.INI+sc.INF>150&&sc.AFF<50)?'- INI+INF > 150 con AFF < 50: rischio leadership non stabile':'',
+    (sc.CRE>75&&sc.MET<40)?'- CRE alta + MET bassa: profilo creativo ma non strutturato':'',
+    (sc.INI>75&&sc.FOC<40)?'- INI alta + FOC bassa: profilo attivante ma dispersivo':''
+  ].filter(Boolean).join('\n');
+
+  const prompt=`Sei un sistema HR professionale che utilizza il Metodo Test Master Creativamente®.
+Genera un Report di Valutazione completo e consulenziale per il candidato ${t.candidato.nome}.
+
+PUNTEGGI (scala 0–100):
+${punteggi}
+
+FASCE INTERPRETATIVE:
+${fasce}
+
+INDICE DI TRASPARENZA: ${sc.TRA}%
+Interpretazione trasparenza: ${sc.TRA>=60?'Profilo coerente e leggibile':sc.TRA>=40?'Leggera desiderabilità sociale':'Profilo poco affidabile – leggere con cautela'}
+
+${ruolo?'RUOLO TARGET: '+ruolo:'(Nessun ruolo target specificato)'}
+
+MACRO-DIMENSIONI:
+⚙️ Struttura Operativa: AFF ${sc.AFF}%, MET ${sc.MET}%, QUA ${sc.QUA}%, FOC ${sc.FOC}%
+🧠 Struttura Cognitiva: ANA ${sc.ANA}%, CRE ${sc.CRE}%, INI ${sc.INI}%
+🤝 Struttura Relazionale: REL ${sc.REL}%, INF ${sc.INF}%, INT ${sc.INT}%
+
+STRUTTURA OBBLIGATORIA DEL REPORT:
+
+1. SINTESI ESECUTIVA
+(Livello generale del profilo, punti di forza dominanti, aree critiche, attendibilità, compatibilità sintetica con ruolo. Max 12–15 righe.)
+
+2. ANALISI DELLE DIMENSIONI COMPORTAMENTALI
+(Per ognuna delle 10 aree: nome, fascia, interpretazione tecnica, impatto organizzativo, rischio se estremo.)
+
+3. ANALISI DELLE MACRO-DIMENSIONI
+(Struttura Operativa, Struttura Cognitiva, Struttura Relazionale — coerenza interna e pattern.)
+
+4. PATTERN DOMINANTI E DINAMICHE INTERNE
+(Polarizzazioni, squilibri, sinergie tra aree.)
+
+5. INDICATORI DI FRIZIONE ORGANIZZATIVA
+(Combinazioni a rischio, spiegazione tecnica senza giudizio morale.)
+
+6. RISCHI SITUAZIONALI
+(Comportamento in contesti strutturati, destrutturati, sotto pressione, ambiguità decisionale.)
+
+7. CONDIZIONI ORGANIZZATIVE FAVORENTI
+(Leadership ideale, autonomia consigliata, ambiente più adatto, cultura aziendale coerente.)
+
+${ruolo?'8. COMPATIBILITÀ CON IL RUOLO TARGET\n(Profilo ideale teorico per '+ruolo+', confronto con profilo reale, gap principali, valutazione: Alta / Moderata / Critica con motivazione.)\n\n9. VALUTAZIONE FINALE':'8. VALUTAZIONE FINALE'}
+(Valore potenziale, maturità comportamentale, eventuale necessità di coaching, idoneità al contesto. 8–10 righe.)
+
+STILE OBBLIGATORIO:
+- Linguaggio consulenziale, tecnico HR
+- Nessun giudizio morale
+- Nessun emoji nel testo
+- Nessun linguaggio informale
+- Lunghezza: 1.500–2.500 parole
+
+${cond?'REGOLE CONDIZIONALI DA APPLICARE:\n'+cond:''}`;
+
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-opus-4-20250514',max_tokens:5000,messages:[{role:'user',content:prompt}]})
+    });
+    const d=await r.json();
+    if(d.error){el.innerHTML='<div class="notice-card"><div class="notice-dot" style="background:#ff3b30"></div>Errore API: '+d.error.message+'</div>';return;}
+    const txt=d.content[0].text
+      .replace(/^#{1,3}\s*(.+)$/gm,'<h3>$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    el.innerHTML='<div class="report-card"><div class="report-card-header"><div class="report-card-title">Report — '+t.candidato.nome+'</div><button class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById(\'report-out\').innerText).then(()=>alert(\'Copiato!\'))">Copia testo</button></div><div id="report-out">'+txt+'</div></div>';
+  }catch(e){
+    el.innerHTML='<div class="notice-card"><div class="notice-dot" style="background:#ff3b30"></div>Errore: '+e.message+'</div>';
+  }
+}
+
+loadTests();
+</script>
+</body>
+</html>
